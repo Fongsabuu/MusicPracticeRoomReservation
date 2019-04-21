@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { VerifyLoginService } from 'src/app/services/verify-login.service';
 
 @Component({
   selector: 'app-navbar',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  loginstatus: boolean;
+
+  constructor(private vl: VerifyLoginService) {}
 
   ngOnInit() {
+    this.vl.login_status.subscribe(s => {
+      console.log(s);
+      this.loginstatus = <boolean>s;
+    })
   }
 
+  logOut(){
+    this.vl.checkLogin('');
+  }
 }

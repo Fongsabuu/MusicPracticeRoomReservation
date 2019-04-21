@@ -1,0 +1,26 @@
+<br>
+<div class="container">
+  <button type="button" class="btn btn-light" (click)="btnBack()">
+    <i class="fas fa-chevron-left"></i><i class="fas fa-chevron-left"></i>
+    Back
+  </button>
+</div>
+<hr>
+
+<div class="container" *ngIf="back">
+  <div *ngFor="let bt of booking_type; let i=index" class="card bg-dark text-white">
+    <a (click)="onSelectRoomType(booking_type)">
+      <img [src]=bt.imgurl class="card-img">
+      <div class="card-img-overlay ">
+        <div class="col-md-4 offset-md-4">
+          <div class="bkt-img-content align-middle ">
+            <h5 class="card-title">{{bt.title}}</h5>
+            <p class="card-text">{{bt.detail}}</p>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+  <br>
+</div>
+<app-booking-detail [roomtype]="selectroomtype"></app-booking-detail>

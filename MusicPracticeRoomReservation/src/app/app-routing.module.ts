@@ -15,6 +15,14 @@ const routes : Routes = [
     loadChildren: './components/login/login.module#LoginModule'
   },
   {
+    path : 'reserveroom' , 
+    loadChildren: './components/booking/booking.module#BookingModule'
+  },
+  {
+    path : 'reservation' , 
+    loadChildren: './components/reservation/reservation.module#ReservationModule'
+  },
+  {
     path : '',
     redirectTo : 'home',
     pathMatch : 'full'

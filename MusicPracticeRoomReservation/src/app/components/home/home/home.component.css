@@ -8,6 +8,7 @@ img{
 }
 @media screen and (max-width: 768px) {
     img {
-        height: 500px;
+        height: 50vh;
+        /* background-size: cover; */
     }
 }

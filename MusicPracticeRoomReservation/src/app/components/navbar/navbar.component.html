@@ -1,13 +1,15 @@
-
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
   <div class="container">
+    <!-- navbar brand -->
     <a class="navbar-brand" href="#">Music Practice Room Reservation</a>
+    <!-- ปุ่มเปิด menu ตอน responsive navbar -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
       aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <!-- menu navbar -->
+    <!-- befor login -->
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault" *ngIf="!loginstatus">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item ">
           <a class="nav-link" routerLink="/home">Home <span class="sr-only">(current)</span></a>
@@ -20,5 +22,35 @@
         </li>
       </ul>
     </div>
+    
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault" *ngIf="loginstatus">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item ">
+            <a class="nav-link" routerLink="/home">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/reserveroom">Reserve Room</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/reservation">Reservation</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="./">record</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              Username
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">Profile</a>
+              <a class="dropdown-item" (click)="logOut()">Log Out</a>
+              <!-- <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Something else here</a> -->
+            </div>
+          </li>
+        </ul>
+      </div>
+      <!--  -->
   </div>
 </nav>
