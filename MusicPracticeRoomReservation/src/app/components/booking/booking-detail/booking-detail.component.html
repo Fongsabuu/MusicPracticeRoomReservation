@@ -1,5 +1,17 @@
-<div *ngIf="roomtype">
-  <p>
-    booking-detail works!
-  </p>  
+<div class="container" *ngIf="room && !back">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+      <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+      <!-- <h1>Detail Side</h1> -->
+    </div>
+    <div class="col-12 col-sm-12 col-md-6 col-lg-6 reserve-detail">
+      <h1>{{room.room_name}}</h1>
+      <h4>ขนาดห้อง {{room.room_size}}</h4>
+      <br><br>
+      <h2>{{room.price}} (บาท)</h2>
+      <hr>
+      <h3>เครื่องดนตรี : {{room.musical_instrument}}</h3>
+      <hr>
+      <button type="button" class="btn btn-success btn-lg">จองห้องซ้อม</button>
+  </div>
 </div>
