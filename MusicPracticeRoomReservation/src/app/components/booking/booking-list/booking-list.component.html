@@ -7,10 +7,22 @@
         Back
       </button>
     </div>
-    <div class="col-4 text-center">
-      <h2>datapicker here</h2>
+    <div class="col-6 " *ngIf="!back">
+      <form class="form-inline">
+        <div class="form-group">
+          <div class="input-group">
+            <input class="form-control" placeholder="yyyy-mm-dd" navigation="arrows" outsideDays="collapsed"
+                   name="dp" ngbDatepicker #d="ngbDatepicker"  style="text-align:center;"
+                   (dateSelect)="onDateSelect($event)" [(ngModel)]="date">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary fa fa-calendar" (click)="d.toggle()" type="button"></button>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
-    <div class="col-4"></div>
+    <div class="col-2">
+    </div>
   </div>
 </div>
 <hr>
@@ -31,4 +43,4 @@
   </div>
   <br>
 </div>
-<app-booking-detail [room]="selectroom" [back]="back"></app-booking-detail>
+<app-booking-detail [room]="selectroom" [back]="back" [dateselect]="dateselect"></app-booking-detail>

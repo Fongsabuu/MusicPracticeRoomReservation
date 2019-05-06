@@ -1,6 +1,6 @@
 <div class="container" *ngIf="room && !back">
   <div class="row">
-    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+    <div class="col-12 col-sm-12 col-md-6 col-lg-6 galleryImages">
       <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
       <!-- <h1>Detail Side</h1> -->
     </div>
@@ -13,5 +13,37 @@
       <h3>เครื่องดนตรี : {{room.musical_instrument}}</h3>
       <hr>
       <button type="button" class="btn btn-success btn-lg">จองห้องซ้อม</button>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+      <h1>Room L1</h1>
+      <ul class="list-group">
+        <li *ngFor="let item of timeschedule" class="list-group-item d-flex justify-content-between align-items-center">
+          {{item}}
+          <span *ngFor="let eiei of test" class="badge badge-danger badge-pill">
+            <div *ngIf="item == eiei.time && ( eiei.roomNO =='L1' || eiei.roomNO =='M1' || eiei.roomNO =='S1' )">
+              จองเเล้ว
+            </div>
+          </span>
+        </li>
+      </ul>
+    </div>
+    <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+      <h1>Room L2</h1>
+      <ul class="list-group">
+        <li *ngFor="let item of timeschedule" class="list-group-item d-flex justify-content-between align-items-center">
+          {{item}}
+          <span *ngFor="let eiei of test" class="badge badge-danger badge-pill">
+            <div *ngIf="item == eiei.time && ( eiei.roomNO =='L2' || eiei.roomNO =='M2' || eiei.roomNO =='S2' )">
+              จองเเล้ว
+            </div>
+          </span>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
+<hr>
+<p class="text-center text-muted padding-lg">&copy; Ronnakit Cakeky 2017</p>

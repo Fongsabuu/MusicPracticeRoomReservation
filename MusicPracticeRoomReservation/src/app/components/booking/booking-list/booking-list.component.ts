@@ -3,8 +3,9 @@ import { Roomtype } from "../../../models/roomtype";
 import { Room } from "../../../models/room";
 import { Router } from "@angular/router";
 
-import { TestService } from "../../../services/test.service";
+import { RoomService } from "../../../services/room.service";
 import { BookingDetailComponent } from "../booking-detail/booking-detail.component";
+import { NgbDate, NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-booking-list',
@@ -18,8 +19,10 @@ export class BookingListComponent implements OnInit {
   booking_type : Roomtype[]
   selectroom : Room
   back : boolean;
+  date: NgbDateStruct;
+  dateselect : string;
 
-  constructor(private router : Router, private test : TestService) { }
+  constructor(private router : Router, private roomservice : RoomService, private calendar: NgbCalendar) { }
 
   ngOnInit() {
     this.booking_type = [
@@ -43,10 +46,11 @@ export class BookingListComponent implements OnInit {
       },
     ]
     this.back = true;
+    this.date = this.calendar.getToday();
+    this.onDateSelect(this.date);
   }
   onSelectRoomType(room_type : Roomtype){
-    this.test.getSelectRoom(room_type.room_type).subscribe((result : Room) => this.selectroom = result)
-    console.log(this.selectroom);
+    this.roomservice.getSelectRoom(room_type.room_type).subscribe((result : Room) => this.selectroom = result)
     this.back = false;
   } 
   btnBack(){
@@ -57,7 +61,12 @@ export class BookingListComponent implements OnInit {
       this.back = true
       // this.bookingDetailComponent.room = null
     }
+    this.date = this.calendar.getToday();
+    this.onDateSelect(this.date);
     console.log(this.back);
-    
+  }
+  onDateSelect(date : any){
+    // console.log(date.day+"/"+date.month+"/"+date.year);
+    this.dateselect = date.day+"/"+date.month+"/"+date.year;
   }
 }

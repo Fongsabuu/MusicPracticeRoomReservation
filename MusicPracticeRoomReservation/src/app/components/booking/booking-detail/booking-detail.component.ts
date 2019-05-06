@@ -1,7 +1,14 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation, NgxGalleryImageSize } from 'ngx-gallery';
+//models
 import { Room } from "../../../models/room";
-import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation ,NgxGalleryImageSize} from 'ngx-gallery';
-// import {  } from "../../../../assets/testgallery/";
+import { MockTimeSchedule } from "../../../mockdata/mock-timeschedule";
+import { Time } from "../../../models/time";
+//services
+import { RoomService } from "../../../services/room.service";
+import { NgIf } from '@angular/common';
+
+
 
 @Component({
   selector: 'app-booking-detail',
@@ -10,21 +17,26 @@ import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation ,NgxGalleryImag
 })
 export class BookingDetailComponent implements OnInit {
   @Input() room: Room;
-  @Input() back : boolean;
+  @Input() back: boolean;
+  @Input() dateselect: string;
 
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
+  timeschedule: any = MockTimeSchedule;
+  test : Array<Time> = [];
 
-  constructor() { }
+  constructor(private rs: RoomService) { }
 
-  ngOnInit() {   
-    
+  ngOnInit() {
+
     this.galleryOptions = [
-      { width : "100%", height: "500px", imagePercent: 80, thumbnailsPercent: 20, 
-        imageArrowsAutoHide: true, thumbnailsArrowsAutoHide: true , 
-        previewCloseOnClick: true, previewCloseOnEsc: true },
-      { breakpoint: 500, width: "100%", height: "500px", thumbnailsColumns: 3 , previewSwipe: true , previewCloseOnClick: true }
-      ];
+      {
+        width: "100%", height: "500px", imagePercent: 80, thumbnailsPercent: 20,
+        imageArrowsAutoHide: true, thumbnailsArrowsAutoHide: true,
+        previewCloseOnClick: true, previewCloseOnEsc: true
+      },
+      { breakpoint: 500, width: "100%", height: "500px", thumbnailsColumns: 3, previewSwipe: true, previewCloseOnClick: true }
+    ];
 
     this.galleryImages = [
       {
@@ -53,5 +65,20 @@ export class BookingDetailComponent implements OnInit {
         big: '../../../../assets/testgallery/dump.jpg'
       },
     ];
+  }
+  ngOnChanges(changes: SimpleChanges) {
+    this.test = []
+    if (this.room) {
+      console.log(`OnChanges work..`);
+      this.rs.geTimescheduleRoom(this.dateselect).subscribe(result => {
+        result.forEach(date => {
+          if (this.dateselect == date.date)
+            if (date.roomNO.substr(0, 1) == this.room.room_type) {
+              this.test.push(date)
+            }
+        })
+      })
+      console.log(this.test);   
+    }
   }
 }
