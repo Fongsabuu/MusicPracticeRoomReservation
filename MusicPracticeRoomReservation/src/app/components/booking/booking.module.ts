@@ -6,6 +6,10 @@ import { FormsModule } from "@angular/forms";
 import { NgxGalleryModule } from 'ngx-gallery';
 //ngb
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+//ngx
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 
 
 import { BookingRoutingModule } from './booking-routing.module';
@@ -19,7 +23,10 @@ import { BookingDetailComponent } from './booking-detail/booking-detail.componen
     BookingRoutingModule,
     FormsModule,
     NgxGalleryModule,
-    NgbModule
+    NgbModule,
+    BsDatepickerModule.forRoot(),
+    ModalModule.forRoot(),
+    TimepickerModule.forRoot()
   ]
 })
 export class BookingModule { }

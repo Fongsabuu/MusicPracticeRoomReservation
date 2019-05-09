@@ -12,7 +12,7 @@
       <hr>
       <h3>เครื่องดนตรี : {{room.musical_instrument}}</h3>
       <hr>
-      <button type="button" class="btn btn-success btn-lg">จองห้องซ้อม</button>
+      <button type="button" class="btn btn-success btn-lg" (click)="lgModal.show()">จองห้องซ้อม</button>
     </div>
   </div>
   <hr>
@@ -22,8 +22,9 @@
       <ul class="list-group">
         <li *ngFor="let item of timeschedule" class="list-group-item d-flex justify-content-between align-items-center">
           {{item}}
-          <span *ngFor="let eiei of test" class="badge badge-danger badge-pill">
-            <div *ngIf="item == eiei.time && ( eiei.roomNO =='L1' || eiei.roomNO =='M1' || eiei.roomNO =='S1' )">
+          <span *ngFor="let booked of datebooked" class="badge badge-danger badge-pill">
+            <div
+              *ngIf="item == booked.time && ( booked.roomNO =='L1' || booked.roomNO =='M1' || booked.roomNO =='S1' )">
               จองเเล้ว
             </div>
           </span>
@@ -35,8 +36,9 @@
       <ul class="list-group">
         <li *ngFor="let item of timeschedule" class="list-group-item d-flex justify-content-between align-items-center">
           {{item}}
-          <span *ngFor="let eiei of test" class="badge badge-danger badge-pill">
-            <div *ngIf="item == eiei.time && ( eiei.roomNO =='L2' || eiei.roomNO =='M2' || eiei.roomNO =='S2' )">
+          <span *ngFor="let booked of datebooked" class="badge badge-danger badge-pill">
+            <div
+              *ngIf="item == booked.time && ( booked.roomNO =='L2' || booked.roomNO =='M2' || booked.roomNO =='S2' )">
               จองเเล้ว
             </div>
           </span>
@@ -47,3 +49,85 @@
 </div>
 <hr>
 <p class="text-center text-muted padding-lg">&copy; Ronnakit Cakeky 2017</p>
+
+<!-- <ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Modal</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    This is a modal.
+  </div>
+</ng-template> -->
+<div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left">Large modal</h4>
+        <button type="button" class="close pull-right" (click)="lgModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body row">
+        <!-- image  -->
+        <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+          image
+        </div>
+
+        <!-- booking form -->
+        <div class="col-12 col-lg-8 col-md-8 col-sm-12">
+          <form>
+            <div class="form-group row">
+              <label for="reservetime" class="col-4 col-form-label">เลือกเวลา : </label>
+              <div class="col-8">
+                <!-- <input type="password" class="form-control" id="inputPassword" placeholder="Password"> -->
+                <timepicker [(ngModel)]="mytime"  (ngModelChange)="onTimeChange($event)" name="reservetime" [showMeridian]="ismeridian" [min]="minTime"
+                  [max]="maxTime" [hourStep]=1 [minuteStep]=0></timepicker>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="roomtype" class="col-4 col-form-label">เลือกห้อง : </label>
+              <div class="col-8">
+                <select class="form-control input-lg" name="roomtype"  ngModel (ngModelChange)="onRoomSelect($event)">
+                  <option value="1">Room 1</option>
+                  <option value="2">Room 2</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="hours" class="col-4 col-form-label">เลือกจำนวน (ชม.) : </label>
+              <div class="col-8">
+                <select class="form-control input-lg" name="hours" ngModel (ngModelChange)="onHoursSelect($event)">
+                  <option value=1>1 ชม.</option>
+                  <option value=2>2 ชม.</option>
+                  <option value=3>3 ชม.</option>
+                  <option value=4>4 ชม.</option>
+                </select>
+              </div>
+            </div>
+            <hr>
+            <h4> รายละเอียดการจอง</h4>
+            <div class="booked-detail row">
+              <div class="col-sm-12 col-md-6 col-lg-6">
+                ห้องที่จอง : <label *ngIf="roomselect">{{room.room_type}}{{roomselect}}</label>
+              </div>
+              <div class="col-sm-12 col-md-6 col-lg-6">
+                เวลาที่จอง : <label> {{totaltime}} น.</label>
+              </div>
+              <div class="col-12">
+                ราคา : <label>{{totalprice}}</label>
+              </div>
+            </div>
+            <hr>
+            <div class="alert alert-danger" role="alert">
+              เวลาที่คุณเลือกมีคนจองไว้เเล้ว
+            </div>
+            <button type="button" class="btn btn-success btn-lg col-12" [disabled]="!bookedDetail">ยืนยันการจอง</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

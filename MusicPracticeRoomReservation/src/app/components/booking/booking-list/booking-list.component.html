@@ -11,11 +11,19 @@
       <form class="form-inline">
         <div class="form-group">
           <div class="input-group">
-            <input class="form-control" placeholder="yyyy-mm-dd" navigation="arrows" outsideDays="collapsed"
-                   name="dp" ngbDatepicker #d="ngbDatepicker"  style="text-align:center;"
-                   (dateSelect)="onDateSelect($event)" [(ngModel)]="date">
+            <input 
+                    type="text"
+                    class="form-control"
+                    #dp="bsDatepicker"
+                    bsDatepicker
+                    (bsValueChange)="onValueChange($event)"
+                    [bsValue]="bsValue" 
+                    [minDate]="minDate"
+                    [maxDate]="maxDate">
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary fa fa-calendar" (click)="d.toggle()" type="button"></button>
+              <button class="btn btn-outline-secondary fa fa-calendar" 
+                      (click)="dp.toggle()" 
+                      [attr.aria-expanded]="dp.isOpen"></button>
             </div>
           </div>
         </div>
@@ -43,4 +51,5 @@
   </div>
   <br>
 </div>
-<app-booking-detail [room]="selectroom" [back]="back" [dateselect]="dateselect"></app-booking-detail>
+
+<app-booking-detail [room]="selectroom" [back]="back"  [bsValue]="bsValue"></app-booking-detail>
