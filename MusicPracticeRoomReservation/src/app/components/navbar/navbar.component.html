@@ -11,13 +11,13 @@
     <!-- befor login -->
     <div class="collapse navbar-collapse" id="navbarsExampleDefault" *ngIf="!loginstatus">
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item ">
-          <a class="nav-link" routerLink="/home">Home <span class="sr-only">(current)</span></a>
+        <li class="nav-item " data-toggle="collapse" data-target=".navbar-collapse.show">
+          <a class="nav-link" routerLink="/home" >Home <span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/signup">Sign Up</a>
+        <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+          <a class="nav-link" routerLink="/signup" >Sign Up</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
           <a class="nav-link" routerLink="/login">Log In</a>
         </li>
       </ul>
@@ -25,19 +25,19 @@
     
     <div class="collapse navbar-collapse" id="navbarsExampleDefault" *ngIf="loginstatus">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item ">
+          <li class="nav-item " data-toggle="collapse" data-target=".navbar-collapse.show">
             <a class="nav-link" routerLink="/home">Home <span class="sr-only">(current)</span></a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
             <a class="nav-link" routerLink="/reserveroom">Reserve Room</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
             <a class="nav-link" routerLink="/reservation">Reservation</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
             <a class="nav-link" routerLink="./">record</a>
           </li>
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown" data-toggle="collapse" data-target=".navbar-collapse.show">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false">
               Username

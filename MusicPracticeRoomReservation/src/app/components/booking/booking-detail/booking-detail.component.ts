@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChanges, TemplateRef, HostListener } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, TemplateRef, HostListener, ViewChild } from '@angular/core';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation, NgxGalleryImageSize } from 'ngx-gallery';
 // models
 import { Room } from "../../../models/room";
@@ -21,6 +21,11 @@ export class BookingDetailComponent implements OnInit {
   @Input() room: Room;
   @Input() back: boolean;
   @Input() bsValue: Date;
+  
+  //ngx-modal
+  @ViewChild('lgModal')
+  modalRef : BsModalRef;
+
   // ngx-gellery
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
@@ -30,6 +35,7 @@ export class BookingDetailComponent implements OnInit {
   timeschedule: any = MockTimeSchedule;
   datebooked: Array<Time> = [];
   dateselect: string;
+  dateselect2: string;
   mytime: Date;
   minTime: Date;
   maxTime: Date;
@@ -41,10 +47,17 @@ export class BookingDetailComponent implements OnInit {
   bookedDetail: boolean = false;
   totaltime: string;
   totalprice: any;
-  test: any[];
-  eiei: Array<any> = [];
-  //ngx-modal
-  modalRef: BsModalRef;
+  bookedtime: Array<any> = [];
+
+  //alert มีคนจองเเล้ว
+  foundTime = 0;
+
+  //alert จองเกินเวลส
+  timeOverflow = 0;
+
+  //model การจองห้อง
+  reservation : Array<any> = [];
+
 
   constructor(private rs: RoomService, private modalService: BsModalService) {
   }
@@ -105,11 +118,14 @@ export class BookingDetailComponent implements OnInit {
       this.mytime.setHours(12);
       this.mytime.setMinutes(30);
       // set maxTime & minTime in timepciker
-      this.maxTime.setHours(22);
+      this.maxTime.setHours(20);
+      this.maxTime.setMinutes(31);
       this.minTime.setHours(12)
+      this.minTime.setMinutes(29)
 
       // เเปลง date เป็น string format เพื่อเอาไปค้นหา
       this.dateselect = this.parseDate(this.bsValue);
+      //this.dateselect2 = this.parseDate2(this.bsValue);
 
       // ค้นหาเวลาที่มีคนจองเเล้วตามวันที่เลือก ถ้ามี push ใส่ array
       this.rs.geTimescheduleRoom(this.dateselect).subscribe(result => {
@@ -120,12 +136,7 @@ export class BookingDetailComponent implements OnInit {
             }
         })
       })
-      console.log(this.datebooked);
     }
-  }
-
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
   }
 
   parseDate(value: Date): string {
@@ -141,6 +152,20 @@ export class BookingDetailComponent implements OnInit {
     // return dd + "/" + mm + "/" + yyyy;
     return value.getDate() + "/" + (value.getMonth() + 1) + "/" + value.getFullYear();
   }
+
+  parseDate2(value: Date): string {
+    let dd = value.getDate() + "";
+    let mm = (value.getMonth() + 1) + "";
+    let yyyy = value.getFullYear();
+    if (value.getDate() < 10) {
+      dd = '0' + dd;
+    }
+    if (value.getMonth() + 1 < 10) {
+      mm = '0' + mm;
+    }
+    return dd + "/" + mm + "/" + yyyy;
+  }
+
   onTimeChange(time: any) {
     this.timeselect = time.getHours();
     this.bookedVerify();
@@ -157,35 +182,67 @@ export class BookingDetailComponent implements OnInit {
   }
 
   bookedVerify() {
-    this.eiei = [];
+    this.bookedtime = [];
     if (this.timeselect && this.roomselect && this.hoursselect) {
+
       this.totaltime = this.timeselect + ".30 - " + (this.timeselect + Number(this.hoursselect)) + ".30";
       this.totalprice = Number(this.room.price.substr(0, 3)) * Number(this.hoursselect);
-      // for (let index = 0; index < this.hoursselect; index++) {
-      //   this.eiei.push((this.timeselect+index)+".30");
-      // }
-      // console.log(this.eiei);
-      this.test = this.totaltime.split(" ");
-      if (this.datebooked.length > 0) {
-        console.log("มีคนจอง");
-        for (let index = 0; index < this.datebooked.length; index++) {
-          if (this.datebooked[index].roomNO.substr(1) == this.roomselect) {
-            // for (let ind = 0; ind < this.eiei.length; ind++) {
-            //   if (this.datebooked[index].time.includes(this.eiei[ind])) { this.bookedDetail = false; break;
-            //   }else { this.bookedDetail = true;}
-            // }
-            console.log("booked.time", this.datebooked[index].time);
-            console.log(this.datebooked[index].time.includes(this.test[0]));
-            console.log(this.datebooked[index].time.includes(this.test[2]));
-            if (this.datebooked[index].time.includes(this.test[0])) { this.bookedDetail = false; break;}
-            else if (this.datebooked[index].time.includes(this.test[2])) {this.bookedDetail = false; break;}
-            else this.bookedDetail = true;
+
+      for (let index = 0; index < this.hoursselect; index++) {
+        let nowhours = (this.timeselect + index) + ".30";
+        let nexthours = (this.timeselect + index + 1) + ".30";
+        let hours = nowhours + "-" + nexthours;
+        this.bookedtime.push(hours);
+      }
+
+      console.log(this.datebooked);
+      console.log(this.bookedtime);
+
+      if (this.timeselect + Number(this.hoursselect) > 21) {
+        this.timeOverflow = 1;
+        this.bookedDetail = false;
+      } else {
+        this.timeOverflow = 0;
+        // ถ้าวันที่เลือกมีคนจอง
+        if (this.datebooked.length > 0) {
+          for (let index = 0; index < this.datebooked.length; index++) {
+            if (this.datebooked[index].roomNO.substr(1) == this.roomselect) {
+              for (let i = 0; i < this.bookedtime.length; i++) {
+                if (this.bookedtime[i] == this.datebooked[index].time) {
+                  // ตรวจสอบเวลาที่จองว่า ชนกับเวลาที่มีคนจองไว้ไหม ถ้าไม่มี foundtime = 0  ถ้ามีให้ foundtime = 1 เเละให้เเจ้งตืนกับบล็อคปุ่มจอง
+                  this.foundTime = 1;
+                  this.bookedDetail = false;
+                  break;
+                } else {
+                  this.foundTime = 0;
+                  this.bookedDetail = true;
+                }
+              }
+              if (this.foundTime == 1) {
+                break;
+              }
+            }
           }
         }
-      } else {
-        console.log("ไม่มีคนจอง");
-        this.bookedDetail = true;
+        // วันที่เลือกไม่มีคนจอง
+        else {
+          this.bookedDetail = true;
+        }
       }
     }
   }
+
+  reserveRoom(){
+    this.reservation = [];
+    this.bookedtime.forEach(time => {
+      this.reservation.push({
+        date: this.dateselect,
+        roomNO: this.room.room_type+this.roomselect,
+        time: time
+      });
+    });
+   this.modalRef.hide();
+    console.log(this.reservation);
+  }
+
 }

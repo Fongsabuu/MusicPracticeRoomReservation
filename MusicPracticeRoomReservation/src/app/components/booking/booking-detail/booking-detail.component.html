@@ -65,19 +65,13 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 id="dialog-sizes-name1" class="modal-title pull-left">Large modal</h4>
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left">เลือกวันที่เเละเวลาที่ต้องการจอง</h4>
         <button type="button" class="close pull-right" (click)="lgModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body row">
-        <!-- image  -->
-        <div class="col-12 col-lg-4 col-md-4 col-sm-12">
-          image
-        </div>
-
-        <!-- booking form -->
-        <div class="col-12 col-lg-8 col-md-8 col-sm-12">
+      <div class="modal-body container ">
+        <div class="col-12">
           <form>
             <div class="form-group row">
               <label for="reservetime" class="col-4 col-form-label">เลือกเวลา : </label>
@@ -121,10 +115,13 @@
               </div>
             </div>
             <hr>
-            <div class="alert alert-danger" role="alert">
+            <div *ngIf="foundTime == 1" class="alert alert-danger" role="alert">
               เวลาที่คุณเลือกมีคนจองไว้เเล้ว
             </div>
-            <button type="button" class="btn btn-success btn-lg col-12" [disabled]="!bookedDetail">ยืนยันการจอง</button>
+            <div *ngIf="timeOverflow == 1" class="alert alert-danger" role="alert">
+              คุณจองเวลาเกิน เนื่องจากร้านปิด 21.30 น.
+            </div>
+            <button type="button" class="btn btn-success btn-lg col-12" [disabled]="!bookedDetail" (click)="reserveRoom()">ยืนยันการจอง</button>
           </form>
         </div>
       </div>
