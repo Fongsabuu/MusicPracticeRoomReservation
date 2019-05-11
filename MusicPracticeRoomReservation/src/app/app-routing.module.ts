@@ -23,6 +23,10 @@ const routes : Routes = [
     loadChildren: './components/reservation/reservation.module#ReservationModule'
   },
   {
+    path : 'record' , 
+    loadChildren: './components/record/record.module#RecordModule'
+  },
+  {
     path : '',
     redirectTo : 'home',
     pathMatch : 'full'
