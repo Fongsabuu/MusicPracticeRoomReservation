@@ -8,14 +8,14 @@ import { VerifyLoginService } from 'src/app/services/verify-login.service';
 })
 export class NavbarComponent implements OnInit {
 
-  loginstatus: boolean;
+  loginstatus: string;
 
   constructor(private vl: VerifyLoginService) {}
 
   ngOnInit() {
     this.vl.login_status.subscribe(s => {
       console.log(s);
-      this.loginstatus = <boolean>s;
+      this.loginstatus = <string>s;
     })
   }
 

@@ -27,6 +27,10 @@ const routes : Routes = [
     loadChildren: './components/record/record.module#RecordModule'
   },
   {
+    path : 'profile' , 
+    loadChildren: './components/profile/profile.module#ProfileModule'
+  },
+  {
     path : '',
     redirectTo : 'home',
     pathMatch : 'full'

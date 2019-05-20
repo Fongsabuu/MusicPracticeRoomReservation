@@ -6,19 +6,24 @@ import { Observable, of, BehaviorSubject } from 'rxjs';
 })
 export class VerifyLoginService {
 
-  private lsSource = new BehaviorSubject(new Boolean);
+  private lsSource = new BehaviorSubject(new String);
   login_status = this.lsSource.asObservable();
 
   constructor() {   
-    this.lsChange(false);
+    this.lsChange('N');
+    console.log('VerifyLoginService constructor');   
   }
 
   checkLogin(login: any) {
-    if (login.email == 'member' && login.password == '1234') {
-      this.lsChange(true);
+    if (login.email == 'member' && login.password == 'mem1234') {
+      this.lsChange('M');
       return true;
-    }else{
-      this.lsChange(false);
+    }else if (login.email == 'admin' && login.password == 'ad1234'){
+      this.lsChange('A');
+      return true;
+    }
+    else{
+      this.lsChange('N');
       return false;
     }
   }

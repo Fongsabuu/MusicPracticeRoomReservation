@@ -98,6 +98,8 @@
                       ngbDatepicker
                       [footerTemplate]="footerTemplate" 
                       #d="ngbDatepicker" 
+                      [minDate]="{year: 1950, month: 1, day: 1}"
+                      [maxDate]="today"
                       required>
                       <!-- <span class="help-block" *ngIf="!dp.valid && dp.touched">Please select a valid birthday</span> -->
               <div class="input-group-append">

@@ -1,3 +1,32 @@
-<p>
-  record works!
-</p>
+<br>
+<div class="container">
+  <h3>ประวัติการจอง</h3>
+  <hr>
+  <p-table #dt [columns]="cols" [value]="records" [paginator]="true" [rows]="10">
+    <ng-template pTemplate="caption">
+      <div style="text-align: right">
+        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+        <input type="text" pInputText size="50" placeholder="Global Filter"
+          (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:50%">
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+          {{col.header}}
+          <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-record let-columns="columns" >
+      <!-- <tr [pSelectableRow]="rowData"> -->
+      <tr>
+        <td *ngFor="let col of columns">
+          <div>
+              {{record[col.field]}}
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

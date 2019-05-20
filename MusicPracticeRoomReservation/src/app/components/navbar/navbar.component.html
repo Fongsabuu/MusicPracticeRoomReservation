@@ -9,7 +9,7 @@
     </button>
     <!-- menu navbar -->
     <!-- befor login -->
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault" *ngIf="!loginstatus">
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault" *ngIf="loginstatus =='N'">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item " data-toggle="collapse" data-target=".navbar-collapse.show">
           <a class="nav-link" routerLink="/home" >Home <span class="sr-only">(current)</span></a>
@@ -22,8 +22,8 @@
         </li>
       </ul>
     </div>
-    
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault" *ngIf="loginstatus">
+    <!-- user login -->
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault" *ngIf="loginstatus =='M'">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item " data-toggle="collapse" data-target=".navbar-collapse.show">
             <a class="nav-link" routerLink="/home">Home <span class="sr-only">(current)</span></a>
@@ -43,7 +43,7 @@
               Username
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Profile</a>
+              <a class="dropdown-item" routerLink="/profile/editprofile">Profile</a>
               <a class="dropdown-item" (click)="logOut()">Log Out</a>
               <!-- <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#">Something else here</a> -->
@@ -51,6 +51,34 @@
           </li>
         </ul>
       </div>
-      <!--  -->
+      <!-- admin -->
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault" *ngIf="loginstatus =='A'">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item " data-toggle="collapse" data-target=".navbar-collapse.show">
+              <a class="nav-link" routerLink="/home">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+              <a class="nav-link" routerLink="/reserveroom">ManageRoom</a>
+            </li>
+            <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+              <a class="nav-link" routerLink="/reservation">Reservation</a>
+            </li>
+            <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+              <a class="nav-link" routerLink="/record">Record</a>
+            </li>
+            <li class="nav-item dropdown" data-toggle="collapse" data-target=".navbar-collapse.show">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                Admin
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">ManageUser</a>
+                <a class="dropdown-item" (click)="logOut()">Log Out</a>
+                <!-- <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a> -->
+              </div>
+            </li>
+          </ul>
+        </div>
   </div>
 </nav>
