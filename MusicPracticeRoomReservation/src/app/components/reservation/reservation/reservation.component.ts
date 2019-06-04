@@ -103,8 +103,9 @@ export class ReservationComponent implements OnInit {
               payment_img: ""
             }
             this.reservationservice.getPayment(this.payment).subscribe((res_payment: any) => {
-              console.log(res_payment[0].payment_img);
+              //console.log(res_payment[0].payment_img);
               this.payment_img.push('http://localhost:8081/reservation/payment/' + res_payment[0].payment_img)
+              console.log(this.payment_img);
             })
           }
         });
@@ -122,8 +123,9 @@ export class ReservationComponent implements OnInit {
               payment_img: ""
             }
             this.reservationservice.getPayment(this.payment).subscribe((res_payment: any) => {
-              console.log(res_payment[0].payment_img);
+              //console.log(res_payment[0].payment_img);
               this.payment_img.push('http://localhost:8081/reservation/payment/' + res_payment[0].payment_img)
+              console.log(this.payment_img);
             })
           }
         });

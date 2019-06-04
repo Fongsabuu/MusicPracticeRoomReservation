@@ -34,12 +34,12 @@
           <div class="col-12" *ngIf="reserve.reserve_status == 1 && role == 'a'">
             <hr>
             <button type="button" class="btn btn-success btn-lg col-12"
-              (click)="confirmPayment(reserve)">ยืนยัน</button>
+              (click)="confirmPayment(reserve)"><i class="fas fa-check-double"></i> ยืนยัน</button>
           </div>
           <div class="col-12" *ngIf="reserve.reserve_status == 0 && role !='a'">
             <hr>
             <button type="button" class="btn btn-success btn-lg col-12" [disabled]="!addimage_status"
-              (click)="onUploadPayment(reserve)">อัพโหลด</button>
+              (click)="onUploadPayment(reserve)"><i class="fas fa-cloud-upload-alt"></i> อัพโหลด</button>
           </div>
         </div>
       </div>

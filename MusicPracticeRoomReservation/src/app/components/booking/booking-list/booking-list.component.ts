@@ -33,8 +33,8 @@ export class BookingListComponent implements OnInit {
   constructor(private router: Router, private roomservice: RoomService) {
     this.minDate = new Date();
     this.maxDate = new Date();
-    this.minDate.setDate(this.minDate.getDate() - 365);
-    this.maxDate.setDate(this.maxDate.getDate() + 365);
+    this.minDate.setDate(this.minDate.getDate());
+    this.maxDate.setDate(this.maxDate.getDate() + 100);
   }
 
   ngOnInit() {

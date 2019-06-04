@@ -134,6 +134,8 @@ export class BookingDetailComponent implements OnInit {
           let hours = nowhours + "-" + nexthours;
           this.bookedtime_bysystem.push(hours)
         }
+        console.log(this.bookedtime_bysystem);
+        console.log(this.timeschedule);
       })
       //เซ็ตเวลาใหม่ทุกครั้งที่เปลี่ยนวัน !!!warningggggggggggggggggggggggg
       this.onHidden()
