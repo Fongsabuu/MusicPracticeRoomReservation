@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {StepsModule} from 'primeng/steps';
 
 import { ReservationRoutingModule } from './reservation-routing.module';
 import { ReservationComponent } from './reservation/reservation.component';
@@ -8,7 +9,8 @@ import { ReservationComponent } from './reservation/reservation.component';
   declarations: [ReservationComponent],
   imports: [
     CommonModule,
-    ReservationRoutingModule
+    ReservationRoutingModule,
+    StepsModule
   ]
 })
 export class ReservationModule { }

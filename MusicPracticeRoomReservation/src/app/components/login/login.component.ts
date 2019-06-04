@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from "../../models/user";
 import { Router } from "@angular/router";
 import { NgForm } from '@angular/forms';
-import { VerifyLoginService } from 'src/app/services/verify-login.service';
+import { LoginService } from 'src/app/services/login/login.service';
 
 @Component({
   selector: 'app-login',
@@ -12,19 +12,18 @@ import { VerifyLoginService } from 'src/app/services/verify-login.service';
 export class LoginComponent implements OnInit {
 
   @ViewChild('f') loginForm: NgForm;
-  userlogin : User;
 
-  constructor(private vl : VerifyLoginService,
-              private router : Router ) { }
+  constructor(private router : Router,
+              private loginservice : LoginService ) { }
 
   ngOnInit() {
   }
 
   onSubmit(){
-    this.userlogin = this.loginForm.value;
-    if(this.vl.checkLogin(this.userlogin)){
-      this.router.navigate(['/home'])
-    }
+    this.loginservice.login(this.loginForm.value).subscribe(data => {
+      if(data != 0) this.router.navigate(['/home']);
+      else alert("user or password incorrect");
+    });
   }
 
 }

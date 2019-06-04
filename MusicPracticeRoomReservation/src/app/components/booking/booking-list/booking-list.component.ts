@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Roomtype } from "../../../models/roomtype";
+import { Room } from "../../../models/room";
 import { Router } from "@angular/router";
+import { RoomService } from 'src/app/services/room/room.service';
+
+
 
 @Component({
   selector: 'app-booking-list',
@@ -9,48 +13,64 @@ import { Router } from "@angular/router";
 })
 export class BookingListComponent implements OnInit {
 
-  booking_type : Roomtype[]
-  selectroomtype : Roomtype
-  test : boolean;
-  back : boolean;
+  // วิธีเรียกอ้างถึง child component
+  // @ViewChild(BookingDetailComponent)
+  // private bookingDetailComponent: BookingDetailComponent;
 
-  constructor(private router : Router) { }
+  rooms : Array<Room>
+  banner_room : Array<string> =[]
+
+
+  select_room: Room
+  select_bannerroom : string
+  back: boolean;
+
+  // ngx-datepicker => set date,min,max
+  bsValue = new Date();
+  minDate: Date;
+  maxDate: Date;
+
+  constructor(private router: Router, private roomservice: RoomService) {
+    this.minDate = new Date();
+    this.maxDate = new Date();
+    this.minDate.setDate(this.minDate.getDate());
+    this.maxDate.setDate(this.maxDate.getDate() + 100);
+  }
 
   ngOnInit() {
-    this.booking_type = [
-      {
-        imgurl : '../../../../assets/web-images/1L.jpg',
-        title : 'ห้องขนาดใหญ่ (Size L)',
-        detail : 'ราคา ...',
-        room_type : 'L'
-      },
-      {
-        imgurl : '../../../../assets/web-images/1M.jpg',
-        title : 'ห้องขนาดกลาง (Size M)',
-        detail : 'ราคา ...',
-        room_type : 'M'
-      },
-      {
-        imgurl : '../../../../assets/web-images/2s.jpg',
-        title : 'ห้องขนาดเล็ก (Size S)',
-        detail : 'ราคา ...',
-        room_type : 'S'
-      },
-    ]
-    this.test = true;
+    this.roomservice.getAllRoom().subscribe((res : any) =>{
+      res.forEach(res => {
+        this.roomservice.getImgName(res.id, "b").subscribe((imgname_res : any) => {
+          this.banner_room.push('http://localhost:8081/room/img/' + imgname_res[0].name_img)
+        })
+        // setTimeout(() => {
+          
+        // }, 1000);
+      });
+      this.rooms = res;
+    });
     this.back = true;
+    this.onValueChange(this.bsValue);
   }
-  onSelectRoomType(room_type : Roomtype){
-    this.selectroomtype = room_type;
+
+  onSelectRoom(room: Room, banner : string) {
+    this.select_room = room;
+    this.select_bannerroom = banner;
     this.back = false;
-  } 
-  btnBack(){
-    if(this.back){
+  }
+
+  btnBack() {
+    if (this.back) {
+      this.back = false
       this.router.navigate(['/home'])
-    }else{
+    } else {
+      this.bsValue = new Date();
       this.back = true
     }
-    console.log(this.back);
-    
   }
+  
+  onValueChange(value: Date): void {
+    this.bsValue = value;
+  }
+
 }
