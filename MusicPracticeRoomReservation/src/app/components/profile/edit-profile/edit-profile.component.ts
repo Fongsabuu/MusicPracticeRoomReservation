@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { User } from 'src/app/models/user';
+import { UserService } from 'src/app/services/user/user.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-profile',
@@ -7,13 +10,37 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditProfileComponent implements OnInit {
 
-  public imagePath;
-  imgURL: any = "http://ssl.gstatic.com/accounts/ui/avatar_2x.png";
-  public message: string;
+  @ViewChild('f') updateUserForm: NgForm;
 
-  constructor() { }
+  public imagePath;
+  public message: string;
+  imgURL: any = "http://ssl.gstatic.com/accounts/ui/avatar_2x.png";
+  user : User;
+  update_user : User;
+  image : File;
+  addimage_status : boolean = false;
+
+  constructor(private userservice : UserService) { }
 
   ngOnInit() {
+    this.user = {
+      id : 0,
+      email : "",
+      role : "",
+      password : "",
+      firstname : "",
+      lastname : "",
+      gender : "",
+      birthday : "",
+      address : "",
+      tel : "",
+      img_user : "",
+      user_status : ""
+    }
+    this.userservice.getUserByid(localStorage.getItem('auth')).subscribe((res : any) => {
+      this.user = res[0];
+      this.imgURL = 'http://localhost:8081/user/imguser/' +  res[0].img_user;
+    })
   }
 
   preview(files) {
@@ -32,7 +59,25 @@ export class EditProfileComponent implements OnInit {
     reader.onload = (_event) => { 
       this.imgURL = reader.result; 
     }
-    console.log(this.imagePath);
-    
+    this.image = files;
+    this.addimage_status = true;
+  }
+
+  onSubmit(){
+    this.user.firstname = this.updateUserForm.value.firstname;
+    this.user.lastname = this.updateUserForm.value.lastname;
+    this.user.address = this.updateUserForm.value.address;
+    this.user.tel = this.updateUserForm.value.tel;
+    this.user.email = this.updateUserForm.value.email;
+    this.userservice.updateUser(this.user).subscribe((res : any) => {
+      if(res == 1 ){
+        if(this.addimage_status){
+          this.userservice.updateImgUser(this.user.id, this.image).subscribe((res2 : any) => {alert(res2)})
+        }
+        alert("Update User Success!!");
+      }else{
+        alert("Update User Fail!!");
+      }
+    })
   }
 }

@@ -11,19 +11,11 @@
       <form class="form-inline">
         <div class="form-group">
           <div class="input-group">
-            <input 
-                    type="text"
-                    class="form-control"
-                    #dp="bsDatepicker"
-                    bsDatepicker
-                    (bsValueChange)="onValueChange($event)"
-                    [bsValue]="bsValue" 
-                    [minDate]="minDate"
-                    [maxDate]="maxDate">
+            <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker
+              (bsValueChange)="onValueChange($event)" [bsValue]="bsValue" [minDate]="minDate" [maxDate]="maxDate">
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary fa fa-calendar" 
-                      (click)="dp.toggle()" 
-                      [attr.aria-expanded]="dp.isOpen"></button>
+              <button class="btn btn-outline-secondary fa fa-calendar" (click)="dp.toggle()"
+                [attr.aria-expanded]="dp.isOpen"></button>
             </div>
           </div>
         </div>
@@ -36,14 +28,14 @@
 <hr>
 
 <div class="container" *ngIf="back">
-  <div *ngFor="let bt of booking_type; let i=index" class="card bg-dark text-white">
-    <a (click)="onSelectRoomType(bt)">
-      <img [src]=bt.imgurl class="card-img">
+  <div *ngFor="let bt of rooms; let i=index" class="card bg-dark text-white">
+    <a (click)="onSelectRoom(bt,banner_room[i])">
+      <img src={{banner_room[i]}} class="card-img">
       <div class="card-img-overlay ">
         <div class="col-md-4 offset-md-4">
           <div class="bkt-img-content align-middle ">
-            <h5 class="card-title">{{bt.title}}</h5>
-            <p class="card-text">{{bt.detail}}</p>
+            <h5 class="card-title">{{bt.name}}</h5>
+            <p class="card-text">{{bt.price}}</p>
           </div>
         </div>
       </div>
@@ -52,4 +44,4 @@
   <br>
 </div>
 
-<app-booking-detail [room]="selectroom" [back]="back"  [bsValue]="bsValue"></app-booking-detail>
+<app-booking-detail (insertComplete)="btnBack()" [room]="select_room" [back]="back" [bsValue]="bsValue" [banner]="select_bannerroom"></app-booking-detail>

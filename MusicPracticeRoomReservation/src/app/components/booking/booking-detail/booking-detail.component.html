@@ -5,40 +5,26 @@
       <!-- <h1>Detail Side</h1> -->
     </div>
     <div class="col-12 col-sm-12 col-md-6 col-lg-6 reserve-detail">
-      <h1>{{room.room_name}}</h1>
-      <h4>ขนาดห้อง {{room.room_size}}</h4>
+      <h1>{{room.name}}</h1>
+      <h4>ขนาดห้อง {{room.detail}}</h4>
       <br><br>
       <h2>{{room.price}} (บาท)</h2>
       <hr>
-      <h3>เครื่องดนตรี : {{room.musical_instrument}}</h3>
+      <h3>เครื่องดนตรี : {{room.mus_instrument}}</h3>
       <hr>
-      <button type="button" class="btn btn-success btn-lg" (click)="lgModal.show()">จองห้องซ้อม</button>
+      <button type="button" class="btn btn-success btn-lg" (click)="openModal(lgModal.show())">จองห้องซ้อม</button>
     </div>
   </div>
   <hr>
   <div class="row">
-    <div class="col-12 col-lg-6 col-md-6 col-sm-12">
-      <h1>Room L1</h1>
+    <div class="col-12">
+      <h1>ตารางเวลา</h1>
       <ul class="list-group">
         <li *ngFor="let item of timeschedule" class="list-group-item d-flex justify-content-between align-items-center">
           {{item}}
           <span *ngFor="let booked of datebooked" class="badge badge-danger badge-pill">
             <div
               *ngIf="item == booked.time && ( booked.roomNO =='L1' || booked.roomNO =='M1' || booked.roomNO =='S1' )">
-              จองเเล้ว
-            </div>
-          </span>
-        </li>
-      </ul>
-    </div>
-    <div class="col-12 col-lg-6 col-md-6 col-sm-12">
-      <h1>Room L2</h1>
-      <ul class="list-group">
-        <li *ngFor="let item of timeschedule" class="list-group-item d-flex justify-content-between align-items-center">
-          {{item}}
-          <span *ngFor="let booked of datebooked" class="badge badge-danger badge-pill">
-            <div
-              *ngIf="item == booked.time && ( booked.roomNO =='L2' || booked.roomNO =='M2' || booked.roomNO =='S2' )">
               จองเเล้ว
             </div>
           </span>
@@ -61,7 +47,7 @@
     This is a modal.
   </div>
 </ng-template> -->
-<div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+<div bsModal #lgModal="bs-modal" (onHidden)="onHidden()" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -82,18 +68,9 @@
               </div>
             </div>
             <div class="form-group row">
-              <label for="roomtype" class="col-4 col-form-label">เลือกห้อง : </label>
-              <div class="col-8">
-                <select class="form-control input-lg" name="roomtype"  ngModel (ngModelChange)="onRoomSelect($event)">
-                  <option value="1">Room 1</option>
-                  <option value="2">Room 2</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-group row">
               <label for="hours" class="col-4 col-form-label">เลือกจำนวน (ชม.) : </label>
               <div class="col-8">
-                <select class="form-control input-lg" name="hours" ngModel (ngModelChange)="onHoursSelect($event)">
+                <select class="form-control input-lg" name="hours" [ngModel]="defualtHours" (ngModelChange)="onHoursSelect($event)">
                   <option value=1>1 ชม.</option>
                   <option value=2>2 ชม.</option>
                   <option value=3>3 ชม.</option>
@@ -105,7 +82,7 @@
             <h4> รายละเอียดการจอง</h4>
             <div class="booked-detail row">
               <div class="col-sm-12 col-md-6 col-lg-6">
-                ห้องที่จอง : <label *ngIf="roomselect">{{room.room_type}}{{roomselect}}</label>
+                ห้องที่จอง : <label *ngIf="room">{{room.name}}</label>
               </div>
               <div class="col-sm-12 col-md-6 col-lg-6">
                 เวลาที่จอง : <label> {{totaltime}} น.</label>

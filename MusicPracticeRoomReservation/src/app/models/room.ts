@@ -1,9 +1,9 @@
 export class Room {
-    room_name : string;
-    room_type : string;
-    //room_NO : string;
-    room_size : string;
-    musical_instrument : string;
-    price : string;
-    //status : string;
+    id : number
+    name : string
+    type : string
+    price : string 
+    mus_instrument : string
+    detail : string
+    room_status : number
 }

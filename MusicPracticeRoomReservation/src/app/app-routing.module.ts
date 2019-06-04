@@ -3,6 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes : Routes = [
   {
+    path : '',
+    redirectTo : 'home',
+    pathMatch : 'full'
+  },
+  {
     path : 'home' , 
     loadChildren: './components/home/home.module#HomeModule'
   },
@@ -31,7 +36,10 @@ const routes : Routes = [
     loadChildren: './components/profile/profile.module#ProfileModule'
   },
   {
-    path : '',
+    path : 'manageroom' , 
+    loadChildren: './components/manageroom/manageroom.module#ManageroomModule'
+  },
+  { path: '**', 
     redirectTo : 'home',
     pathMatch : 'full'
   }

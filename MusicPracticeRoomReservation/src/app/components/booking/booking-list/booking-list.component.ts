@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Roomtype } from "../../../models/roomtype";
 import { Room } from "../../../models/room";
 import { Router } from "@angular/router";
+import { RoomService } from 'src/app/services/room/room.service';
 
-import { RoomService } from "../../../services/room.service";
 
 
 @Component({
@@ -17,8 +17,12 @@ export class BookingListComponent implements OnInit {
   // @ViewChild(BookingDetailComponent)
   // private bookingDetailComponent: BookingDetailComponent;
 
-  booking_type: Roomtype[]
-  selectroom: Room
+  rooms : Array<Room>
+  banner_room : Array<string> =[]
+
+
+  select_room: Room
+  select_bannerroom : string
   back: boolean;
 
   // ngx-datepicker => set date,min,max
@@ -34,32 +38,24 @@ export class BookingListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.booking_type = [
-      {
-        imgurl: '../../../../assets/web-images/1L.jpg',
-        title: 'ห้องขนาดใหญ่ (Size L)',
-        detail: 'ราคา ...',
-        room_type: 'L'
-      },
-      {
-        imgurl: '../../../../assets/web-images/1M.jpg',
-        title: 'ห้องขนาดกลาง (Size M)',
-        detail: 'ราคา ...',
-        room_type: 'M'
-      },
-      {
-        imgurl: '../../../../assets/web-images/2s.jpg',
-        title: 'ห้องขนาดเล็ก (Size S)',
-        detail: 'ราคา ...',
-        room_type: 'S'
-      },
-    ]
+    this.roomservice.getAllRoom().subscribe((res : any) =>{
+      res.forEach(res => {
+        this.roomservice.getImgName(res.id, "b").subscribe((imgname_res : any) => {
+          this.banner_room.push('http://localhost:8081/room/img/' + imgname_res[0].name_img)
+        })
+        // setTimeout(() => {
+          
+        // }, 1000);
+      });
+      this.rooms = res;
+    });
     this.back = true;
     this.onValueChange(this.bsValue);
   }
 
-  onSelectRoomType(room_type: Roomtype) {
-    this.roomservice.getSelectRoom(room_type.room_type).subscribe((result: Room) => this.selectroom = result)
+  onSelectRoom(room: Room, banner : string) {
+    this.select_room = room;
+    this.select_bannerroom = banner;
     this.back = false;
   }
 

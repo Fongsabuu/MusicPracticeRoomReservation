@@ -18,7 +18,7 @@
     </div>
 
     <div class="col-12 col-sm-12 col-md-8 col-lg-8">
-      <form class="form" id="registrationForm" >
+      <form class="form" id="registrationForm"  (ngSubmit)="onSubmit()" #f="ngForm">
         
         <div class="form-group">
           <div class="col-xs-6">
@@ -27,8 +27,11 @@
             </label>
             <input  type="text" 
                     class="form-control" 
-                    name="first_name" 
-                    id="first_name" 
+                    name="firstname" 
+                    id="firstname" 
+                    [ngModel]="user.firstname"
+                    #firstname="ngModel"
+                    required
                    >
           </div>
         </div>
@@ -40,8 +43,11 @@
             </label>
             <input  type="text" 
                     class="form-control" 
-                    name="last_name" 
-                    id="last_name" 
+                    name="lastname" 
+                    id="lastname" 
+                    [ngModel]="user.lastname"
+                    #lastname="ngModel"
+                    required
                     >
           </div>
         </div>
@@ -55,6 +61,9 @@
                       class="form-control" 
                       name="address" 
                       id="address" 
+                      [ngModel]="user.address"
+                      #address="ngModel"
+                      required
                       >
             </div>
           </div>
@@ -68,6 +77,9 @@
                         class="form-control" 
                         name="tel" 
                         id="tel" 
+                        [ngModel]="user.tel"
+                        #tel="ngModel"
+                        required
                         >
               </div>
             </div>
@@ -81,9 +93,26 @@
                       class="form-control" 
                       name="email" 
                       id="email" 
+                      [ngModel]="user.email"
+                      #email="ngModel"
+                      required
                       >
             </div>
           </div>
+
+          <!-- <div class="form-group">
+              <div class="col-xs-6">
+                <label for="newpassword">
+                  <h4>NewPassword</h4>
+                </label>
+                <input  type="password" 
+                        class="form-control" 
+                        name="newpassword" 
+                        id="newpassword" 
+                        placeholder="newpassword"
+                        title="enter your newpassword.">
+              </div>
+            </div>
 
           <div class="form-group">
             <div class="col-xs-6">
@@ -97,40 +126,15 @@
                       placeholder="password"
                       title="enter your password.">
             </div>
-          </div>
-
-          <div class="form-group">
-            <div class="col-xs-6">
-              <label for="newpassword">
-                <h4>NewPassword</h4>
-              </label>
-              <input  type="password" 
-                      class="form-control" 
-                      name="newpassword" 
-                      id="newpassword" 
-                      placeholder="newpassword"
-                      title="enter your newpassword.">
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="col-xs-6">
-              <label for="verifypassword">
-                <h4>VerifyPassword</h4>
-              </label>
-              <input  type="password" 
-                      class="form-control" 
-                      name="verifypassword" 
-                      id="verifypassword" 
-                      placeholder="verifypassword"
-                      title="enter your verifypassword">
-            </div>
-          </div>
+          </div> -->
 
           <div class="form-group">
             <div class="col-xs-12">
               <br>
-              <button class="btn btn-lg btn-success" type="submit"><i class="glyphicon glyphicon-ok-sign"></i>
+              <button class="btn btn-lg btn-success" 
+                      type="submit"
+                      [disabled]="!f.valid">
+                      <i class="glyphicon glyphicon-ok-sign"></i>
                 Save</button>
               <button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>
             </div>
