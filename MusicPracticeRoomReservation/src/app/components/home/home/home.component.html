@@ -31,7 +31,7 @@
           </div>
         </div>
       </div> -->
-      <div class="carousel-inner" role="listbox">
+    <div class="carousel-inner" role="listbox">
       <div class="carousel-item active">
         <img src="../../../../assets/web-images/3L.jpg" class="d-block w-100" alt="..." style="width: 100%;">
         <div class="carousel-caption">
@@ -39,10 +39,15 @@
             <h5>ห้องขนาดใหญ่</h5>
             <p>250 บาท/ชั่วโมง</p>
           </div>
-          <a class="btn btn-warning btn-lg margin-bottom-lg" style="margin:3px" routerLink="/signup">Sign Up <fa
-              name="pencil"></fa></a>
-          <a class="btn btn-warning btn-lg margin-bottom-lg" style="margin:3px" routerLink="/login">Log In <fa
-              name="sign-out"></fa></a>
+          <div *ngIf="!loginstatus"> 
+            <a class="btn btn-warning btn-lg margin-bottom-lg" style="margin:3px" routerLink="/signup">Sign Up <fa
+                name="pencil"></fa></a>
+            <a class="btn btn-warning btn-lg margin-bottom-lg" style="margin:3px" routerLink="/login">Log In <fa
+                name="sign-out"></fa></a>
+          </div>
+          <div *ngIf="loginstatus">
+            <a class="btn btn-warning btn-lg margin-bottom-lg" style="margin:3px" routerLink="/resrevaion">จองห้องซ้อมดนตรี <i class="fas fa-guitar"></i></a>
+          </div>
         </div>
       </div>
       <div class="carousel-item">
@@ -52,10 +57,15 @@
             <h5>ห้องขนาดกลาง</h5>
             <p>200 บาท/ชั่วโมง</p>
           </div>
-          <a class="btn btn-warning btn-lg margin-bottom-lg" style="margin:3px" routerLink="/signup">Sign Up <fa
-              name="pencil"></fa></a>
-          <a class="btn btn-warning btn-lg margin-bottom-lg" style="margin:3px" routerLink="/login">Log In <fa
-              name="sign-out"></fa></a>
+          <div *ngIf="!loginstatus"> 
+            <a class="btn btn-warning btn-lg margin-bottom-lg" style="margin:3px" routerLink="/signup">Sign Up <fa
+                name="pencil"></fa></a>
+            <a class="btn btn-warning btn-lg margin-bottom-lg" style="margin:3px" routerLink="/login">Log In <fa
+                name="sign-out"></fa></a>
+          </div>
+          <div *ngIf="loginstatus">
+            <a class="btn btn-warning btn-lg margin-bottom-lg" style="margin:3px" routerLink="/resrevaion">จองห้องซ้อมดนตรี <i class="fas fa-guitar"></i></a>
+          </div>
         </div>
       </div>
       <div class="carousel-item">
@@ -65,10 +75,15 @@
             <h5>ห้องขนาดเล็ก</h5>
             <p>170 บาท/ชั่วโมง</p>
           </div>
-          <a class="btn btn-warning btn-lg margin-bottom-lg" style="margin:3px" routerLink="/signup">Sign Up <fa
-              name="pencil"></fa></a>
-          <a class="btn btn-warning btn-lg margin-bottom-lg" style="margin:3px" routerLink="/login">Log In <fa
-              name="sign-out"></fa></a>
+          <div *ngIf="!loginstatus"> 
+            <a class="btn btn-warning btn-lg margin-bottom-lg" style="margin:3px" routerLink="/signup">Sign Up <fa
+                name="pencil"></fa></a>
+            <a class="btn btn-warning btn-lg margin-bottom-lg" style="margin:3px" routerLink="/login">Log In <fa
+                name="sign-out"></fa></a>
+          </div>
+          <div *ngIf="loginstatus">
+            <a class="btn btn-warning btn-lg margin-bottom-lg" style="margin:3px" routerLink="/resrevaion">จองห้องซ้อมดนตรี <i class="fas fa-guitar"></i></a>
+          </div>
         </div>
       </div>
       <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
@@ -86,27 +101,34 @@
     <h2 class="text-center">Our Services</h2>
     <div class="row">
       <div class="col-lg-3 col-sm-3 text-center">
-        <fa name="book" size="5x"></fa>
+        <span style="font-size: 5em; color: Tomato;">
+          <i class="fas fa-music"></i>
+        </span>
         <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
       </div>
       <div class="col-lg-3 col-sm-3 text-center">
-        <fa name="bed" size="5x"></fa>
+        <span style="font-size: 5em; color: Tomato;">
+          <i class="fas fa-guitar"></i>
+        </span>
         <!-- <i class="fa fa-bed fa-8x margin-top-lg margin-bottom-lg"></i> -->
         <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
       </div>
       <div class="col-lg-3 col-sm-3 text-center">
-        <fa name="calendar" size="5x"></fa>
+        <span style="font-size: 5em; color: Tomato;">
+          <i class="fas fa-drum"></i>
+        </span>
         <!-- <i class="fa fa-calendar-check fa-8x margin-top-lg margin-bottom-lg"></i> -->
         <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
       </div>
       <div class="col-lg-3 col-sm-3 text-center">
-        <fa name="tag" size="5x"></fa>
+        <span style="font-size: 5em; color: Tomato;">
+          <i class="far fa-file-audio"></i>
+        </span>
         <!-- <i class="fa fa-tag fa-8x margin-top-lg margin-bottom-lg"></i> -->
         <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
       </div>
     </div>
   </div>
-  <p class="text-center text-muted padding-lg">&copy; Ronnakit Cakeky 2017</p>
   <!-- <div *ngFor="let item of fileUploadst">
     <img src="{{item}}" class="d-block w-100" alt="..." style="width: 100%;">
   </div> -->

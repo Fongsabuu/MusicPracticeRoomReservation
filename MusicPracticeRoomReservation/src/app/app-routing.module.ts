@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
+import { AuthGuard } from "./auth/auth.guard";
 const routes : Routes = [
   {
     path : '',
@@ -9,35 +9,43 @@ const routes : Routes = [
   },
   {
     path : 'home' , 
-    loadChildren: './components/home/home.module#HomeModule'
+    loadChildren: './components/home/home.module#HomeModule',
+    canActivate: [AuthGuard]
   },
   {
     path : 'signup' , 
-    loadChildren: './components/signup/signup.module#SignupModule'
+    loadChildren: './components/signup/signup.module#SignupModule',
+    canActivate: [AuthGuard]
   },
   {
     path : 'login' , 
-    loadChildren: './components/login/login.module#LoginModule'
+    loadChildren: './components/login/login.module#LoginModule',
+    canActivate: [AuthGuard]
   },
   {
     path : 'reserveroom' , 
-    loadChildren: './components/booking/booking.module#BookingModule'
+    loadChildren: './components/booking/booking.module#BookingModule',
+    canActivate: [AuthGuard]
   },
   {
     path : 'reservation' , 
-    loadChildren: './components/reservation/reservation.module#ReservationModule'
+    loadChildren: './components/reservation/reservation.module#ReservationModule',
+    canActivate: [AuthGuard]
   },
   {
     path : 'record' , 
-    loadChildren: './components/record/record.module#RecordModule'
+    loadChildren: './components/record/record.module#RecordModule',
+    canActivate: [AuthGuard]
   },
   {
     path : 'profile' , 
-    loadChildren: './components/profile/profile.module#ProfileModule'
+    loadChildren: './components/profile/profile.module#ProfileModule',
+    canActivate: [AuthGuard]
   },
   {
     path : 'manageroom' , 
-    loadChildren: './components/manageroom/manageroom.module#ManageroomModule'
+    loadChildren: './components/manageroom/manageroom.module#ManageroomModule',
+    canActivate: [AuthGuard]
   },
   { path: '**', 
     redirectTo : 'home',

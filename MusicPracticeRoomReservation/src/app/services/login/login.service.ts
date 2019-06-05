@@ -12,6 +12,7 @@ export class LoginService {
   // check login type observeable
   private lsSource = new BehaviorSubject(new String);
   login_status = this.lsSource.asObservable();
+  redirectUrl : any;
 
   private url: string = "http://localhost:8081/user/login";
 
