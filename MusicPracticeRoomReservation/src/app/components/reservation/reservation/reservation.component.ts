@@ -94,42 +94,61 @@ export class ReservationComponent implements OnInit {
       this.reservationservice.getReservationForUser(this.parseDate(this.nowDate), +localStorage.getItem('auth')).subscribe((res: any) => {
         res.forEach(resp => {
           this.reservations.push(resp)
-          if (resp.reserve_status != 0) {
-            this.payment = {
-              id: 0,
-              date: this.parseDate(this.nowDate),
-              user_id: +localStorage.getItem('auth'),
-              reserve_id: resp.id,
-              payment_img: ""
-            }
+          this.setPayment(resp);
             this.reservationservice.getPayment(this.payment).subscribe((res_payment: any) => {
-              //console.log(res_payment[0].payment_img);
-              this.payment_img.push('http://localhost:8081/reservation/payment/' + res_payment[0].payment_img)
-              console.log(this.payment_img);
+              if (res_payment.length != 0) {
+                this.payment_img.push('http://localhost:8081/reservation/payment/' + res_payment[0].payment_img)
+                console.log("add img");
+              } else {
+                this.payment_img.push("")
+                console.log("add null");
+              }
             })
-          }
         });
       });
     } else {
       this.reservationservice.getReservationByDate(this.parseDate(this.nowDate)).subscribe((res: any) => {
         res.forEach(resp => {
           this.reservations.push(resp)
-          if (resp.reserve_status != 0) {
-            this.payment = {
-              id: 0,
-              date: this.parseDate(this.nowDate),
-              user_id: resp.user_id,
-              reserve_id: resp.id,
-              payment_img: ""
-            }
-            this.reservationservice.getPayment(this.payment).subscribe((res_payment: any) => {
-              //console.log(res_payment[0].payment_img);
+          // if (resp.reserve_status != 0) {
+          //   this.payment = {
+          //     id: 0,
+          //     date: this.parseDate(this.nowDate),
+          //     user_id: resp.user_id,
+          //     reserve_id: resp.id,
+          //     payment_img: ""
+          //   }
+          //   this.reservationservice.getPayment(this.payment).subscribe((res_payment: any) => {
+          //     //console.log(res_payment[0].payment_img);
+          //     console.log("res_payment for User",res_payment);
+          //     this.payment_img.push('http://localhost:8081/reservation/payment/' + res_payment[0].payment_img)
+          //     console.log(this.payment_img);
+          //   })
+          // }
+          this.setPayment(resp);
+          this.reservationservice.getPayment(this.payment).subscribe((res_payment: any) => {
+            // set img_payment ให้เเต่ละ reservation ถ้า reservation ไหนยังไม่ได้อัพหลักฐานให้ push ค่าว่างไว้
+            // ที่ต้องเอามาตรวจสอบตรงนี้เพราะ Angular ทำงานเเบบ asynchronous ทำให้ต้องมาเช็คใน subscribe T-T
+            if (res_payment.length != 0) {
               this.payment_img.push('http://localhost:8081/reservation/payment/' + res_payment[0].payment_img)
-              console.log(this.payment_img);
-            })
-          }
+              console.log("add img");
+            } else {
+              this.payment_img.push("")
+              console.log("add null");
+            }
+          });
         });
       });
+    }
+  }
+
+  setPayment(resp : any){
+    this.payment = {
+      id: 0,
+      date: this.parseDate(this.nowDate),
+      user_id: resp.user_id,
+      reserve_id: resp.id,
+      payment_img: ""
     }
   }
 }

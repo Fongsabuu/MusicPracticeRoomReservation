@@ -92,6 +92,7 @@ export class BookingDetailComponent implements OnInit {
     this.image = []
     this.datebooked = []
     this.bookedtime_bysystem = []
+    this.bookedDetail = false
     if (this.room) {
 
     this.galleryImages = [
@@ -275,7 +276,7 @@ export class BookingDetailComponent implements OnInit {
     this.maxTime.setMinutes(31);
     this.minTime.setHours(12)
     this.minTime.setMinutes(29)
-    this.bookedDetail = true
+    this.bookedDetail = false
     this.foundTime = 0;
     this.timeOverflow = 0;
     

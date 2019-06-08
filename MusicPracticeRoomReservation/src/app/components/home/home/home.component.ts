@@ -24,7 +24,6 @@ export class HomeComponent implements OnInit {
       }
     });
     this.loginservice.login_status.subscribe(s => {
-      console.log("navbar OI",s);
       this.loginstatus = <string>s;
     })
   }

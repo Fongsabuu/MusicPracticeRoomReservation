@@ -39,13 +39,12 @@ export class BookingListComponent implements OnInit {
 
   ngOnInit() {
     this.roomservice.getAllRoom().subscribe((res : any) =>{
+      //console.log(res);
       res.forEach(res => {
-        this.roomservice.getImgName(res.id, "b").subscribe((imgname_res : any) => {
+         this.roomservice.getImgName(res.id, "b").subscribe((imgname_res : any) => {
+          console.log(imgname_res[0].name_img);
           this.banner_room.push('http://localhost:8081/room/img/' + imgname_res[0].name_img)
         })
-        // setTimeout(() => {
-          
-        // }, 1000);
       });
       this.rooms = res;
     });
