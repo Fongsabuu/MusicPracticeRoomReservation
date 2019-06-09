@@ -38,6 +38,7 @@ export class BookingDetailComponent implements OnInit {
   galleryImages: NgxGalleryImage[];
   image: Array<string> = [];
 
+  user_role = localStorage.getItem('role')
   defualtHours = "1 ชม."
   timeschedule: any = MockTimeSchedule;
   datebooked: Array<Time> = [];

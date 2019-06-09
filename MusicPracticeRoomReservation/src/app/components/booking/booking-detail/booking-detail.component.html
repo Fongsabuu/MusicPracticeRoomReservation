@@ -12,7 +12,7 @@
       <hr>
       <h3>เครื่องดนตรี : {{room.mus_instrument}}</h3>
       <hr>
-      <button type="button" class="btn btn-success btn-lg" (click)="openModal(lgModal.show())"><i class="fas fa-book"></i> จองห้องซ้อม</button>
+      <button type="button" class="btn btn-success btn-lg" (click)="openModal(lgModal.show())" *ngIf="user_role != 'a'"><i class="fas fa-book"></i> จองห้องซ้อม</button>
     </div>
   </div>
   <hr>

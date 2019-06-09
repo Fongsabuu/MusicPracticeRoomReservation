@@ -16,6 +16,9 @@ export class AuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     let url: string = state.url;
+    let id = next.paramMap.get('id')
+    console.log(next.paramMap.get('id'));
+    
 
     return this.checkLogin(url);
   }
@@ -24,27 +27,29 @@ export class AuthGuard implements CanActivate {
     if (localStorage.getItem('role') != null) {
       this.login_role = localStorage.getItem('role');
       if (this.login_role == 'a') {
-        if (url == "/home" || url == "/manageroom" || url == "/manageroom/edit" || url == "/reservation" || url == "/record")
-          return true
-        else {
-          alert("User ทีใช้ไม่มีสิทธิเข้าถึงหน้า :"+ url)
+        if (url == "/login" || url == "/signup" || url == "/profile/editprofile" ) {
+          alert("User ทีใช้ไม่มีสิทธิเข้าถึงหน้า :" + url)
           this.router.navigate(['/home']);
           return false
         }
-      } else if (this.login_role == 'm') {
-        if (url == "/home" || url == "/profile/editprofile" || url == "/reservation" || url == "/record" || url == "/reserveroom")
-          return true
         else {
-          alert("User ทีใช้ไม่มีสิทธิเข้าถึงหน้า :"+ url)
+          return true
+        }
+      } else if (this.login_role == 'm') {
+        if (url == "/login" || url == "/signup" || url == "/manageroom" || url == "/manageroom/edit") {
+          alert("User ทีใช้ไม่มีสิทธิเข้าถึงหน้า :" + url)
           this.router.navigate(['/home']);
           return false
+        }
+        else {
+          return true
         }
       }
     } else {
       if (url == "/home" || url == "/reserveroom" || url == "/signup" || url == "/login")
         return true
       else {
-        alert("กรุณา Login ก่อนเข้าถึงหน้า :"+ url)
+        alert("กรุณา Login ก่อนเข้าถึงหน้า :" + url)
         this.router.navigate(['/login']);
         return false
       }

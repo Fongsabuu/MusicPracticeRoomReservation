@@ -6,13 +6,13 @@
     </div>
     <div class="col-2"></div>
     <div class="col-5">
-      <button type="button" class="btn btn-success btn-lg col-12"><a [routerLink]="['edit']"><i class="fas fa-plus"></i> เพิ่มห้องซ้อม</a></button>
+      <a [routerLink]="['edit']"><button type="button" class="btn btn-success btn-lg col-12"><i class="fas fa-plus"></i> เพิ่มห้องซ้อม</button></a>
     </div>
   </div>
   <hr>
   <div class="col-12">
     <div *ngFor="let bt of rooms; let i=index" class="card bg-dark text-white">
-      <a [routerLink]="['edit/', bt.id]">
+      <a [routerLink]="['edit', bt.id]">
         <img src={{banner_room[i]}} class="card-img">
         <div class="card-img-overlay ">
           <div class="col-md-4 offset-md-4">

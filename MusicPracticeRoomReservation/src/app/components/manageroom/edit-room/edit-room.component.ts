@@ -15,6 +15,7 @@ export class EditRoomComponent implements OnInit {
   @ViewChild('f') roomForm: NgForm;
 
   img_banner: any = "http://ssl.gstatic.com/accounts/ui/avatar_2x.png";
+  isChecked
   image_banner: File
   img_list: Array<any> = []
   image_list: File
@@ -61,7 +62,7 @@ export class EditRoomComponent implements OnInit {
       this.img_banner = reader.result;
     }
     console.log(this.img_banner);
-    
+
     this.image_banner = files;
     this.addbanner_status = true;
   }
@@ -84,20 +85,20 @@ export class EditRoomComponent implements OnInit {
     this.addimg_status = true;
   }
 
-  deleteImg(){
-    this.roomservice.deleletImg(this.id, "N").subscribe((res : any) => {
+  deleteImg() {
+    this.roomservice.deleletImg(this.id, "N").subscribe((res: any) => {
       console.log(res);
       this.loadRoomById();
     })
   }
 
-  deleteRoom(){ 
-    this.roomservice.deleletRoom(this.id).subscribe((res : any) => {
+  deleteRoom() {
+    this.roomservice.deleletRoom(this.id).subscribe((res: any) => {
       console.log(res);
-      if(res != 0){
+      if (res != 0) {
         alert("Delete Room !!Success");
         this.router.navigate(['/manageroom']);
-      }else{
+      } else {
         alert("Delete Room !!Fail");
       }
     })
@@ -125,8 +126,8 @@ export class EditRoomComponent implements OnInit {
           alert("Update Room Fail!!");
         }
       })
-    }else{
-      this.roomservice.createRoom(this.edit_room).subscribe((res : any) => {
+    } else {
+      this.roomservice.createRoom(this.edit_room).subscribe((res: any) => {
         if (res != 0) {
           this.id = res
           if (this.addbanner_status) {
@@ -151,8 +152,6 @@ export class EditRoomComponent implements OnInit {
     this.roomservice.getRoomById(this.id).subscribe((res: any) => {
       this.edit_room = res[0]
       this.roomservice.getImgName(this.id, "B").subscribe((resp: any) => {
-        console.log(resp);
-        console.log(resp[0].name_img);
         this.img_banner = 'http://localhost:8081/room/img/' + resp[0].name_img;
       })
       this.roomservice.getImgName(this.id, "N").subscribe((resp: any) => {

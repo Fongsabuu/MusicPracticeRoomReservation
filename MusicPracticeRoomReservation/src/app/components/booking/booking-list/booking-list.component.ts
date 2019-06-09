@@ -33,17 +33,22 @@ export class BookingListComponent implements OnInit {
   constructor(private router: Router, private roomservice: RoomService) {
     this.minDate = new Date();
     this.maxDate = new Date();
-    this.minDate.setDate(this.minDate.getDate());
+    if(localStorage.getItem('role') == 'a'){
+      this.minDate.setDate(this.maxDate.getDate() - 365);
+    }else {
+      this.minDate.setDate(this.minDate.getDate());
+    }
     this.maxDate.setDate(this.maxDate.getDate() + 100);
   }
 
-  ngOnInit() {
+   ngOnInit() {
     this.roomservice.getAllRoom().subscribe((res : any) =>{
       //console.log(res);
       res.forEach(res => {
-         this.roomservice.getImgName(res.id, "b").subscribe((imgname_res : any) => {
+         this.roomservice.getImgName(res.id, "b").subscribe( async (imgname_res : any) => {
           console.log(imgname_res[0].name_img);
-          this.banner_room.push('http://localhost:8081/room/img/' + imgname_res[0].name_img)
+          await this.banner_room.push('http://localhost:8081/room/img/' + imgname_res[0].name_img)
+          // await this.addImg(imgname_res[0].name_img);
         })
       });
       this.rooms = res;
@@ -71,5 +76,6 @@ export class BookingListComponent implements OnInit {
   onValueChange(value: Date): void {
     this.bsValue = value;
   }
+
 
 }
