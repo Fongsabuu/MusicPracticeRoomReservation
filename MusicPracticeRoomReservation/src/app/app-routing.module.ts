@@ -47,6 +47,11 @@ const routes : Routes = [
     loadChildren: './components/manageroom/manageroom.module#ManageroomModule',
     canActivate: [AuthGuard]
   },
+  {
+    path : 'manageuser' , 
+    loadChildren: './components/manageuser/manageuser.module#ManageuserModule',
+    // canActivate: [AuthGuard]
+  },
   { path: '**', 
     redirectTo : 'home',
     pathMatch : 'full'

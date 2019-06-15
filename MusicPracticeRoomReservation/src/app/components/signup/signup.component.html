@@ -3,7 +3,7 @@
     <div class="col-lg-2 col-sm-2"></div>
     <div class="col-lg-8 col-sm-8">
       <h2 class="margin-top-sm">Sign Up</h2>
-      <p class="text-muted">1 Email,1 tel for 1 User Account.</p>
+      <p class="text-muted">1 Email for 1 User Account.</p>
 
       <form class="row margin-top-lg"  (ngSubmit)="onSubmit()" #f="ngForm" >
         <div class="col-lg-6 col-sm-6">
@@ -15,7 +15,9 @@
                     name="email"
                     ngModel
                     #email="ngModel"
-                    required> 
+                    minlength="4"
+                    required
+                    email> 
                     <span class="help-block" *ngIf="!email.valid && email.touched">Please enter a valid email!</span>
           </div>
         </div>
@@ -28,6 +30,7 @@
                     name="password"
                     ngModel
                     #password="ngModel"
+                    minlength="4"
                     required>
                     <span class="help-block" *ngIf="!password.valid && password.touched">Please enter a valid password</span>
                     
@@ -42,6 +45,7 @@
                     name="firstname"
                     ngModel
                     #firstname="ngModel"
+                    minlength="2"
                     required>
                     <span class="help-block" *ngIf="!firstname.valid && firstname.touched">Please enter a valid firstname</span>
           </div>
@@ -55,6 +59,7 @@
                     name="lastname"
                     ngModel
                     #lastname="ngModel"
+                    minlength="2"
                     required>
                     <span class="help-block" *ngIf="!lastname.valid && lastname.touched">Please enter a valid lastname</span>
           </div>
@@ -106,6 +111,7 @@
                 <button class="btn btn-outline-secondary btn-lg calendar fa fa-calendar" (click)="d.toggle()" type="button"></button>
               </div>
             </div>
+            <span class="help-block" *ngIf="!d.valid && d.touched">Please enter a valid date</span>
           </div>
           <ng-template #footerTemplate>
             <hr class="my-0">
@@ -124,8 +130,10 @@
                     name="tel"
                     ngModel 
                     #tel="ngModel"
-                    required>
-                    <span class="help-block" *ngIf="!tel.valid && tel.touched">Please select a valid tel</span>
+                    pattern="^[0-9_-]{8,15}$"
+                    required
+                    >
+                    <span class="help-block" *ngIf="!tel.valid && tel.touched">Please enter a valid tel</span>
           </div>
         </div>
         <div class="col-lg-12 col-sm-12">

@@ -6,13 +6,16 @@ import { RecordComponent } from './record/record.component';
 
 //primeNG
 import {TableModule} from 'primeng/table';
+import {DropdownModule} from 'primeng/primeng';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [RecordComponent],
   imports: [
     CommonModule,
     RecordRoutingModule,
-    TableModule
+    TableModule,
+    DropdownModule
   ]
 })
 export class RecordModule { }

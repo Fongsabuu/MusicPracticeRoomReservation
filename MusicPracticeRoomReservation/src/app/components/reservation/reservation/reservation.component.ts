@@ -2,8 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { ReservationService } from 'src/app/services/reservation/reservation.service';
 import { Reservation_Room } from 'src/app/models/reservation_room';
+import { Reservation_Record } from 'src/app/models/reservation_record';
 import { Payment } from 'src/app/models/payment';
 import { Reservation } from 'src/app/models/reservation';
+import { LoginService } from 'src/app/services/login/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reservation',
@@ -16,14 +19,15 @@ export class ReservationComponent implements OnInit {
   activeIndex: number = 0;
   nowDate = new Date();
   role: string;
-  reservations: Array<Reservation_Room> = [];
+  reservations: Array<Reservation_Record> = [];
   image: File;
   addimage_status: boolean = false;
   payment: Payment
   payment_img: Array<string> = []
 
 
-  constructor(private reservationservice: ReservationService) { }
+  constructor(private reservationservice: ReservationService, private loginservice : LoginService,
+              private router : Router) { }
 
   ngOnInit() {
     this.items = [
@@ -92,6 +96,10 @@ export class ReservationComponent implements OnInit {
     this.payment_img = [];
     if (localStorage.getItem('role') == 'm') {
       this.reservationservice.getReservationForUser(this.parseDate(this.nowDate), +localStorage.getItem('auth')).subscribe((res: any) => {
+        if(res == null){ 
+          this. logOut()
+          return "User got ban"
+        }
         res.forEach(resp => {
           this.reservations.push(resp)
           this.setPayment(resp);
@@ -140,6 +148,8 @@ export class ReservationComponent implements OnInit {
         });
       });
     }
+    console.log(this.reservations);
+    
   }
 
   setPayment(resp : any){
@@ -150,5 +160,11 @@ export class ReservationComponent implements OnInit {
       reserve_id: resp.id,
       payment_img: ""
     }
+  }
+
+  logOut(){
+    this.loginservice.logout();
+    alert("User ของท่านถูกระงับการใช้งาน");
+    this.router.navigate(['/home']);
   }
 }

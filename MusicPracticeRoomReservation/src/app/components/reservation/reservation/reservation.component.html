@@ -9,7 +9,7 @@
         <p-steps [model]="items" [(activeIndex)]="+reserve.reserve_status" styleClass="different"></p-steps>
       </div>
       <div class="card-body">
-        <h5 class="card-title">รายละเอียดการจอง</h5>
+        <h5 class="card-title">ผู้จอง : <span>{{reserve.user_name}} </span> id : <span>{{reserve.user_id}}</span></h5>
         <div class="row">
           <div class="col-12 col-sm-12 col-md-6 col-lg-6">
             วันที่จอง : <span>{{reserve.date}}</span>
@@ -29,7 +29,9 @@
           </div>
           <div class="col-12" *ngIf="reserve.reserve_status != 0">
             หลักฐานการชำระเงิน :
-            <img src={{payment_img[i]}} class="card-img">
+            <div style="text-align: center">
+              <img src={{payment_img[i]}}  class="card-img payment_img" >
+            </div>
           </div>
           <div class="col-12" *ngIf="reserve.reserve_status == 1 && role == 'a'">
             <hr>

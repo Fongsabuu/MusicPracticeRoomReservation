@@ -77,4 +77,9 @@ export class ReservationService {
       error => console.log('oops', error)
     ))
   }
+
+  getUserReport(){
+    return this.http.get(this.url+"/userreport/").pipe();
+  }
+
 }

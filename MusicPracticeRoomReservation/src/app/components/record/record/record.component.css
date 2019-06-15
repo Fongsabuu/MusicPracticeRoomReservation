@@ -15,3 +15,6 @@
         display: none;
     }
 }
+body .ui-dropdown .ui-dropdown-trigger {
+    background-color: blue;
+}

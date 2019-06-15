@@ -13,6 +13,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Router } from '@angular/router';
 import { Reservation } from 'src/app/models/reservation';
 import { ReservationService } from 'src/app/services/reservation/reservation.service';
+import { LoginService } from 'src/app/services/login/login.service';
 
 @Component({
   selector: 'app-booking-detail',
@@ -54,7 +55,7 @@ export class BookingDetailComponent implements OnInit {
   totaltime: string;
   totalprice: any;
   bookedtime: Array<any> = [];
-  bookedtime_bysystem :  Array<any> = [];
+  bookedtime_bysystem: Array<any> = [];
 
   //alert มีคนจองเเล้ว
   foundTime = 0;
@@ -70,7 +71,7 @@ export class BookingDetailComponent implements OnInit {
 
   constructor(private rs: RoomService, private modalService: BsModalService,
     private roomservice: RoomService, private router: Router,
-    private reservationservice: ReservationService) {
+    private reservationservice: ReservationService, private loginservice: LoginService) {
   }
 
   // @HostListener('window:resize', ['$event'])
@@ -96,52 +97,38 @@ export class BookingDetailComponent implements OnInit {
     this.bookedDetail = false
     if (this.room) {
 
-    this.galleryImages = [
-      {
-        small: this.banner,
-        medium: this.banner,
-        big: this.banner
-      },
-    ];
+      this.galleryImages = [
+        {
+          small: this.banner,
+          medium: this.banner,
+          big: this.banner
+        },
+      ];
 
-    this.roomservice.getImgName(this.room.id, "N").subscribe((res: any) => {
-      res.forEach(res => {
-        this.image.push('http://localhost:8081/room/img/' + res.name_img);
-      });
-      this.addGellery();
-      // console.log("this.galleryImages",this.galleryImages);
-    })
-
-    // // เซ็ตเวลาให้ล็อคไว้เริ่มต้นที่ 12.30 
-    // this.mytime = new Date(this.bsValue);
-    // this.maxTime = new Date(this.bsValue);
-    // this.minTime = new Date(this.bsValue);
-    // this.mytime.setHours(12);
-    // this.mytime.setMinutes(30);
-    // // set maxTime & minTime in timepciker
-    // this.maxTime.setHours(20);
-    // this.maxTime.setMinutes(31);
-    // this.minTime.setHours(12)
-    // this.minTime.setMinutes(29)
-
-    // เเปลง date เป็น string format เพื่อเอาไปค้นหา
-    this.dateselect = this.parseDate(this.bsValue);
-    
-    this.reservationservice.getReservation(this.dateselect, this.room.id).subscribe((res : any) => {
-      this.reserve_time = res;
-      res.forEach(reserve => {
-        for (let i = 0; i < Number( reserve.hours.substr(0, 1)); i++) {
-          let nowhours = (Number(reserve.time.substr(0, 2)) + i) + ".30";
-          let nexthours = (Number(reserve.time.substr(0, 2)) + i + 1) + ".30";
-          let hours = nowhours + "-" + nexthours;
-          this.bookedtime_bysystem.push(hours)
-        }
-        console.log(this.bookedtime_bysystem);
-        console.log(this.timeschedule);
+      this.roomservice.getImgName(this.room.id, "N").subscribe((res: any) => {
+        res.forEach(res => {
+          this.image.push('http://localhost:8081/room/img/' + res.name_img);
+        });
+        this.addGellery();
       })
-      //เซ็ตเวลาใหม่ทุกครั้งที่เปลี่ยนวัน !!!warningggggggggggggggggggggggg
-      this.onHidden()
-    })
+      // เเปลง date เป็น string format เพื่อเอาไปค้นหา
+      this.dateselect = this.parseDate(this.bsValue);
+
+      this.reservationservice.getReservation(this.dateselect, this.room.id).subscribe((res: any) => {
+        this.reserve_time = res;
+        res.forEach(reserve => {
+          for (let i = 0; i < Number(reserve.hours.substr(0, 1)); i++) {
+            let nowhours = (Number(reserve.time.substr(0, 2)) + i) + ".30";
+            let nexthours = (Number(reserve.time.substr(0, 2)) + i + 1) + ".30";
+            let hours = nowhours + "-" + nexthours;
+            this.bookedtime_bysystem.push(hours)
+          }
+          console.log(this.bookedtime_bysystem);
+          console.log(this.timeschedule);
+        })
+        //เซ็ตเวลาใหม่ทุกครั้งที่เปลี่ยนวัน !!!warningggggggggggggggggggggggg
+        this.onHidden()
+      })
     }
   }
 
@@ -244,14 +231,19 @@ export class BookingDetailComponent implements OnInit {
     this.reservation.totalprice = this.totalprice;
     this.reservation.user_id = +localStorage.getItem('auth');
     this.reservationservice.insertReservation(this.reservation).subscribe((res: any) => {
-        if(res != 0){
-          this.modalRef.hide()
-          this.insertComplete.emit('complete');
-        }else{
-          alert("Insert Reservation !!Fail")
-          this.modalRef.hide()
-        }
+      // 404404404 is User got ban
+      if (res == 404404404) {
+        this.logOut()
+        return "user got ban";
       }
+      if (res != 0) {
+        this.modalRef.hide()
+        this.insertComplete.emit('complete');
+      } else {
+        alert("Insert Reservation !!Fail")
+        this.modalRef.hide()
+      }
+    }
     )
   }
 
@@ -264,15 +256,33 @@ export class BookingDetailComponent implements OnInit {
     }
   }
 
-  onHidden(){
+  onHidden() {
     //เซ็ตเวลาใหม่ทุกครั้งที่ปิด Modal
-    // เซ็ตเวลาให้ล็อคไว้เริ่มต้นที่ 12.30 
+    // เซ็ตเวลาให้ล็อคไว้เริ่มต้นที่ 12.30
+    console.log(this.bsValue);
+    
+    let nowdate = new Date();
     this.mytime = new Date(this.bsValue);
     this.maxTime = new Date(this.bsValue);
     this.minTime = new Date(this.bsValue);
-    this.mytime.setHours(12);
-    this.mytime.setMinutes(30);
-     // set maxTime & minTime in timepciker
+    if ((this.bsValue.getDate() == nowdate.getDate()) && (this.bsValue.getMonth() == nowdate.getMonth()) && (this.bsValue.getFullYear() == nowdate.getFullYear())) {
+      if (nowdate.getHours() < 12) {
+        this.mytime.setHours(12);
+        this.mytime.setMinutes(30);
+      } else {
+        if (nowdate.getMinutes() > 30) {
+          this.mytime.setHours(nowdate.getHours() + 1);
+        } else {
+          this.mytime.setHours(nowdate.getHours());
+        }
+        this.mytime.setMinutes(30);
+      }
+    } else {
+      this.mytime.setHours(12);
+      this.mytime.setMinutes(30);
+    }
+
+    // set maxTime & minTime in timepciker
     this.maxTime.setHours(20);
     this.maxTime.setMinutes(31);
     this.minTime.setHours(12)
@@ -280,6 +290,14 @@ export class BookingDetailComponent implements OnInit {
     this.bookedDetail = false
     this.foundTime = 0;
     this.timeOverflow = 0;
-    
+
   }
+
+  logOut() {
+    //this.modalRef.hide()
+    this.loginservice.logout();
+    alert("User ของท่านถูกระงับการใช้งาน");
+    this.router.navigate(['/home']);
+  }
+
 }

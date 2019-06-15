@@ -24,3 +24,11 @@
 :host /deep/.different.ui-steps.steps-custom .ui-steps-item .ui-steps-title {
     color: #555555;
 }
+.payment_img{
+    width: 50%;
+}
+@media screen and (max-width: 768px) {
+    .payment_img{
+        width: 100%;
+    }
+}

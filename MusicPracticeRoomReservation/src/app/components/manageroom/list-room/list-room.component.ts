@@ -16,9 +16,9 @@ export class ListRoomComponent implements OnInit {
 
   ngOnInit() {
     this.roomservice.getAllRoom().subscribe((res: any) => {
-      res.forEach(res => {
-        this.roomservice.getImgName(res.id, "b").subscribe(async (imgname_res: any) => {
-          await this.banner_room.push('http://localhost:8081/room/img/' + imgname_res[0].name_img)
+      res.forEach(async res => {
+        await this.roomservice.getImgName(res.id, "b").subscribe( (imgname_res: any) => {
+           this.banner_room.push('http://localhost:8081/room/img/' + imgname_res[0].name_img)
         })
         // setTimeout(() => {
 

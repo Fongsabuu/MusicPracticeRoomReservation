@@ -4,10 +4,10 @@ import { FormsModule } from "@angular/forms";
 
 import { ProfileRoutingModule } from './profile-routing.module';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
-import { ManageProfileComponent } from './manage-profile/manage-profile.component';
+
 
 @NgModule({
-  declarations: [EditProfileComponent, ManageProfileComponent],
+  declarations: [EditProfileComponent],
   imports: [
     CommonModule,
     ProfileRoutingModule,

@@ -44,10 +44,10 @@ export class BookingListComponent implements OnInit {
    ngOnInit() {
     this.roomservice.getAllRoom().subscribe((res : any) =>{
       //console.log(res);
-      res.forEach(res => {
-         this.roomservice.getImgName(res.id, "b").subscribe( async (imgname_res : any) => {
+      res.forEach(async res => {
+        await this.roomservice.getImgName(res.id, "b").subscribe( async (imgname_res : any) => {
           console.log(imgname_res[0].name_img);
-          await this.banner_room.push('http://localhost:8081/room/img/' + imgname_res[0].name_img)
+           await this.banner_room.push('http://localhost:8081/room/img/' + imgname_res[0].name_img)
           // await this.addImg(imgname_res[0].name_img);
         })
       });

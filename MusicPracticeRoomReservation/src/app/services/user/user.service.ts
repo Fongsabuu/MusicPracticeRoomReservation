@@ -39,4 +39,11 @@ export class UserService {
     return this.http.post("http://localhost:8081/user/imguser/" + user_id, formData).pipe();
   }
 
+  updateUserStatus(user_id : any, user_status : any){
+    const formData = new FormData();
+    formData.append('user_id', user_id);
+    formData.append('user_status', user_status);
+    return this.http.post(this.url + "updateuserstatus/", formData).pipe();
+  }
+
 }

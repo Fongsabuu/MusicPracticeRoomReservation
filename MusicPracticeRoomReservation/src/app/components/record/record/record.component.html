@@ -1,5 +1,6 @@
 <br>
-<div class="container">
+<!-- <div class="container"> -->
+<div class="container-fluid">
   <h3>ประวัติการจอง</h3>
   <hr>
   <p-table #dt [columns]="cols" [value]="reservation_records" [paginator]="true" [rows]="10" [responsive]="true">
@@ -16,16 +17,20 @@
     </ng-template>
     <ng-template pTemplate="header" let-columns>
       <tr>
-        <th *ngFor="let col of columns" [pSortableColumn]="col.field">
-          {{col.header}}
-          <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
-            ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order">
-          </p-sortIcon>
+        <th *ngFor="let col of columns" [pSortableColumn]="col.field"
+          [pSortableColumnDisabled]="col.field === 'reserve_status'">
+          <span *ngIf="col.field != 'reserve_status'">
+            {{col.header}}
+            <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+              ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order">
+            </p-sortIcon>
+          </span>
+          <p-dropdown *ngIf="col.field == 'reserve_status'" [options]="brands" [style]="{'width':'150px'}"
+            (onChange)="dt.filter($event.value, col.field, 'equals')"></p-dropdown>
         </th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-record let-columns="columns">
-      <!-- <tr [pSelectableRow]="rowData"> -->
       <tr>
         <td *ngFor="let col of columns">
           <span class="ui-column-title">{{col.header}}</span>
@@ -33,7 +38,7 @@
             {{record[col.field]}}
           </span>
           <span *ngIf="col.field == 'totalprice'">
-              {{record[col.field]}} บาท
+            {{record[col.field]}} บาท
           </span>
           <span *ngIf="col.field == 'reserve_status'">
             <label *ngIf="record[col.field] == 0">รอชำระเงิน</label>
@@ -41,16 +46,6 @@
             <label *ngIf="record[col.field] == 2">เสร็จสมบูรณ์</label>
           </span>
         </td>
-        <!-- <td *ngFor="let col of columns">
-          <div *ngIf="col.field != 'reserve_status'">
-              {{record[col.field]}}
-          </div>
-          <div *ngIf="col.field == 'reserve_status'">
-            <label *ngIf="record[col.field] == 0">รอชำระเงิน</label>
-            <label *ngIf="record[col.field] == 1">รอตรวจสอบ</label>
-            <label *ngIf="record[col.field] == 2">เสร็จสมบูรณ์</label>
-          </div>
-        </td> -->
       </tr>
     </ng-template>
   </p-table>

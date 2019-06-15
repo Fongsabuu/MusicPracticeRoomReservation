@@ -23,6 +23,10 @@ export class LoginService {
   login(user: User) {
     return this.http.post(this.url, user).pipe(map(
       (response : any) => {
+        if(response == null){
+          alert("user ของท่านถูกระงับการใช้งาน");
+          return null
+        }
         if(response.length != 0){
           localStorage.setItem('auth', response[0].id);
           localStorage.setItem('role', response[0].role);
