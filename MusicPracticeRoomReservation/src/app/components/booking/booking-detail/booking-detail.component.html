@@ -56,13 +56,13 @@
       </div>
       <div class="modal-body container ">
         <div class="col-12">
-          <form>
+          <form #f="ngForm">
             <div class="form-group row">
               <label for="reservetime" class="col-4 col-form-label">เลือกเวลา : </label>
               <div class="col-8">
                 <!-- <input type="password" class="form-control" id="inputPassword" placeholder="Password"> -->
                 <timepicker [(ngModel)]="mytime"  (ngModelChange)="onTimeChange($event)" name="reservetime" [showMeridian]="ismeridian" [min]="minTime"
-                  [max]="maxTime" [hourStep]=1 [minuteStep]=0></timepicker>
+                  [max]="maxTime" [hourStep]=1 [minuteStep]=0  ></timepicker>
               </div>
             </div>
             <div class="form-group row">

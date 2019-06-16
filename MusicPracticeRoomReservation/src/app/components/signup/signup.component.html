@@ -6,34 +6,52 @@
       <p class="text-muted">1 Email for 1 User Account.</p>
 
       <form class="row margin-top-lg"  (ngSubmit)="onSubmit()" #f="ngForm" >
+        <div class="col-12">
+            <div class="form-group">
+                <label for="email">E-mail:</label>
+                <input  type="email" 
+                        class="form-control input-lg" 
+                        id="email"
+                        name="email"
+                        ngModel
+                        #email="ngModel"
+                        minlength="4"
+                        required
+                        email> 
+                        <span class="help-block" *ngIf="!email.valid && email.touched">Email is required and format should be john@doe.com.</span>
+              </div>
+        </div>
         <div class="col-lg-6 col-sm-6">
-          <div class="form-group">
-            <label for="email">E-mail:</label>
-            <input  type="email" 
-                    class="form-control input-lg" 
-                    id="email"
-                    name="email"
-                    ngModel
-                    #email="ngModel"
-                    minlength="4"
-                    required
-                    email> 
-                    <span class="help-block" *ngIf="!email.valid && email.touched">Please enter a valid email!</span>
-          </div>
+            <div class="form-group">
+                <label>Password:</label>
+                <input  type="password" 
+                        class="form-control input-lg" 
+                        id="password"
+                        name="password"
+                        ngModel
+                        #password="ngModel"
+                        required>
+                        <span class="help-block" *ngIf="!password.valid && password.touched">Password is required </span>
+                        
+              </div>
         </div>
         <div class="col-lg-6 col-sm-6">
           <div class="form-group">
-            <label>Password:</label>
+            <label>ConfirmPassword:</label>
             <input  type="password" 
                     class="form-control input-lg" 
-                    id="password"
-                    name="password"
+                    id="confirmpassword"
+                    name="confirmpassword"
+                    appConfirmEqualValidator="password"
                     ngModel
-                    #password="ngModel"
-                    minlength="4"
+                    #confirmpassword="ngModel"
                     required>
-                    <span class="help-block" *ngIf="!password.valid && password.touched">Please enter a valid password</span>
-                    
+                    <span class="help-block" *ngIf="confirmpassword.errors?.required && confirmpassword.touched">
+                      Password is required 
+                    </span>
+                    <span class="help-block" *ngIf="confirmpassword.touched && confirmpassword.errors?.notEqual">
+                        Password and Confirm Password dose not match
+                    </span>   
           </div>
         </div>
         <div class="col-lg-6 col-sm-6">
@@ -45,9 +63,8 @@
                     name="firstname"
                     ngModel
                     #firstname="ngModel"
-                    minlength="2"
                     required>
-                    <span class="help-block" *ngIf="!firstname.valid && firstname.touched">Please enter a valid firstname</span>
+                    <span class="help-block" *ngIf="!firstname.valid && firstname.touched">Firstname is required </span>
           </div>
         </div>
         <div class="col-lg-6 col-sm-6">
@@ -59,9 +76,8 @@
                     name="lastname"
                     ngModel
                     #lastname="ngModel"
-                    minlength="2"
                     required>
-                    <span class="help-block" *ngIf="!lastname.valid && lastname.touched">Please enter a valid lastname</span>
+                    <span class="help-block" *ngIf="!lastname.valid && lastname.touched">Lastname is required </span>
           </div>
         </div>
         <div class="col-lg-6 col-sm-6">
@@ -89,7 +105,7 @@
                     ngModel 
                     #address="ngModel"
                     required>
-                    <span class="help-block" *ngIf="!address.valid && address.touched">Please enter a valid address</span>
+                    <span class="help-block" *ngIf="!address.valid && address.touched">Address is required</span>
           </div>
         </div>
         <div class="col-lg-6 col-sm-6">
@@ -133,7 +149,7 @@
                     pattern="^[0-9_-]{8,15}$"
                     required
                     >
-                    <span class="help-block" *ngIf="!tel.valid && tel.touched">Please enter a valid tel</span>
+                    <span class="help-block" *ngIf="!tel.valid && tel.touched">Tel is required and format should be number Ex 0800000000.</span>
           </div>
         </div>
         <div class="col-lg-12 col-sm-12">

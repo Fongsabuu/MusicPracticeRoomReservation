@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, SimpleChanges, TemplateRef, HostListener, ViewChild, Output, EventEmitter } from '@angular/core';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation, NgxGalleryImageSize } from 'ngx-gallery';
+import { NgForm } from '@angular/forms';
 // models
 import { Room } from "../../../models/room";
 import { MockTimeSchedule } from "../../../mockdata/mock-timeschedule";
@@ -26,6 +27,7 @@ export class BookingDetailComponent implements OnInit {
   @Input() back: boolean;
   @Input() bsValue: Date;
   @Input() banner: string;
+  @ViewChild('f') form: NgForm;
 
   @Output()
   insertComplete = new EventEmitter<string>();
@@ -50,7 +52,7 @@ export class BookingDetailComponent implements OnInit {
 
   //check booked
   timeselect: number;
-  hoursselect: number;
+  hoursselect: any;
   bookedDetail: boolean = false;
   totaltime: string;
   totalprice: any;
@@ -156,6 +158,10 @@ export class BookingDetailComponent implements OnInit {
   }
 
   onTimeChange(time: any) {
+    if(time == null ){
+      this.modalRef.hide()
+      return "";
+    }
     this.timeselect = time.getHours();
     this.bookedVerify();
   }
@@ -259,8 +265,7 @@ export class BookingDetailComponent implements OnInit {
   onHidden() {
     //เซ็ตเวลาใหม่ทุกครั้งที่ปิด Modal
     // เซ็ตเวลาให้ล็อคไว้เริ่มต้นที่ 12.30
-    console.log(this.bsValue);
-    
+    this.form.reset();
     let nowdate = new Date();
     this.mytime = new Date(this.bsValue);
     this.maxTime = new Date(this.bsValue);
@@ -290,7 +295,8 @@ export class BookingDetailComponent implements OnInit {
     this.bookedDetail = false
     this.foundTime = 0;
     this.timeOverflow = 0;
-
+    console.log(this.minTime);
+    
   }
 
   logOut() {
